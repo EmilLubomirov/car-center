@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Toolbar } from "@material-ui/core";
 import styles from "./index.module.css";
 import LinkComponent from "../link";
 import getNavigation from "../../utils/navigation";
@@ -13,10 +13,7 @@ const Header = () =>{
         <AppBar position="static">
             <Container>
                 <Toolbar>
-                    <Typography variant="h4" >
-                        Car Center
-                    </Typography>
-
+                    <img src="/car-logo.png" alt="logo"/>
                     <div className={styles.wrapper}>
                         {
                             navigation.map((navItem, index) => {
