@@ -1,13 +1,13 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 
-const ButtonComponent = ({ type, value, onClick}) =>{
+const ButtonComponent = ({ value, color, onClick}) =>{
 
     return (
         <div>
             <Button
                 variant="contained"
-                color="primary"
+                color={color || "primary"}
                 onClick={onClick}
             >
                 {value}

@@ -5,6 +5,7 @@ import Heading from "../../components/heading";
 import Input from "../../components/input";
 import ButtonComponent from "../../components/button";
 import styles from "./index.module.css";
+import Box from "@material-ui/core/Box";
 
 const RegisterPage = () =>{
 
@@ -62,8 +63,10 @@ const RegisterPage = () =>{
                            onChange={handlePasswordChange}/>
                     <Input label="RePassword" type="password" id="rePassword" value={rePassword} name="rePassword"
                            onChange={handleRePasswordChange}/>
-                    <ButtonComponent value="Register"
-                            onClick={handleSubmit}/>
+                    <Box textAlign="center">
+                        <ButtonComponent value="Register"
+                                         onClick={handleSubmit}/>
+                    </Box>
                 </form>
             </div>
         </PageLayout>
