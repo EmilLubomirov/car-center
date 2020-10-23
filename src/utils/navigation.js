@@ -43,7 +43,7 @@ const getNavigation = (user) =>{
         ...commonLinks,
         {
             title: "Add product",
-            path: "/add"
+            path: "/add-product"
         },
         {
             title: "Cart",
