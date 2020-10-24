@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 
-const ButtonComponent = ({ value, color, onClick}) =>{
+const ButtonComponent = ({ value, color, onClick, children}) =>{
 
     return (
         <div>
@@ -10,6 +10,7 @@ const ButtonComponent = ({ value, color, onClick}) =>{
                 color={color || "primary"}
                 onClick={onClick}
             >
+                {children}
                 {value}
             </Button>
         </div>
