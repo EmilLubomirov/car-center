@@ -138,7 +138,7 @@ const AddProductPage = (callback, deps) =>{
                     <form>
                         <Input label="Title" type="text" id="title" value={title}
                                onChange={handleTitleChange}/>
-                        <Input label="Description" type="text" id="description" value={description}
+                        <Input label="Description" type="text" isTextArea={true} id="description" value={description}
                                onChange={handleDescriptionChange}/>
                         <Input label="Quantity" type="number" id="quantity" value={quantity}
                                onChange={handleQuantityChange}/>

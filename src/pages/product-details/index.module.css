@@ -1,0 +1,17 @@
+.wrapper{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 30px 0;
+    max-width: 50%;
+    margin: 40px auto;
+}
+
+.description{
+    max-width: 35%;
+}
+
+.image{
+    max-width: 100%;
+    height: auto;
+}

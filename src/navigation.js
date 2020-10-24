@@ -4,6 +4,7 @@ import RegisterPage from "./pages/register";
 import LoginPage from "./pages/login";
 import AddProductPage from "./pages/add-product";
 import StorePage from "./pages/store";
+import ProductDetailsPage from "./pages/product-details";
 
 const Navigation = () =>{
 
@@ -13,6 +14,7 @@ const Navigation = () =>{
             <Route path="/register" component={RegisterPage}/>
             <Route path="/login" component={LoginPage}/>
             <Route path="/add-product" component={AddProductPage}/>
+            <Route path="/product/:id" component={ProductDetailsPage}/>
         </Switch>
     )
 };

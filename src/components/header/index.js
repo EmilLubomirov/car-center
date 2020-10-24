@@ -7,6 +7,7 @@ import getNavigation from "../../utils/navigation";
 import Container from "@material-ui/core/Container";
 import AuthContext from "../../AuthContext";
 import ButtonComponent from "../button";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 const Header = () =>{
 
@@ -30,6 +31,15 @@ const Header = () =>{
                     <div className={styles.wrapper}>
                         {
                             navigation.map((navItem, index) => {
+
+                                if (navItem.title.toLowerCase().includes("cart")){
+
+                                    return <LinkComponent key={index}
+                                                   path={navItem.path}
+                                                   title={navItem.title}>
+                                        <AddShoppingCartIcon/>
+                                    </LinkComponent>
+                                }
                                 return <LinkComponent key={index}
                                                       path={navItem.path}
                                                       title={navItem.title}/>

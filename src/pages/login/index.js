@@ -53,11 +53,12 @@ const LoginPage = () =>{
 
         authenticate(url, headers, body, async (response) =>{
 
-            const {_id, username } = await response.json();
+            const {user, isAdmin} = await response.json();
 
             context.login({
-                id: _id,
-                username
+                id: user._id,
+                username: user.username,
+                isAdmin
             });
 
             history.push('/', {

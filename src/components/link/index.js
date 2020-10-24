@@ -7,8 +7,8 @@ const LinkComponent = ({path, title, children}) =>{
     return (
         <div data-test-id={`link-${title}`}>
             <Link className={styles.link} to={path}>
-                {title}
                 {children}
+                {title}
             </Link>
         </div>
     )
