@@ -5,6 +5,7 @@ import LoginPage from "./pages/login";
 import AddProductPage from "./pages/add-product";
 import StorePage from "./pages/store";
 import ProductDetailsPage from "./pages/product-details";
+import CartPage from "./pages/cart";
 
 const Navigation = () =>{
 
@@ -15,6 +16,7 @@ const Navigation = () =>{
             <Route path="/login" component={LoginPage}/>
             <Route path="/add-product" component={AddProductPage}/>
             <Route path="/product/:id" component={ProductDetailsPage}/>
+            <Route path="/cart/:userId" component={CartPage}/>
         </Switch>
     )
 };

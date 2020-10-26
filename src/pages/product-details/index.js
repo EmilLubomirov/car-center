@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
@@ -6,11 +6,14 @@ import ButtonComponent from "../../components/button";
 import Heading from "../../components/heading";
 import styles from "./index.module.css";
 import Paper from "@material-ui/core/Paper";
+import {addToCart} from "../../utils/cart";
+import AuthContext from "../../AuthContext";
 
 const ProductDetailsPage = () =>{
 
     const [product, setProduct] = useState({});
     const { id } = useParams();
+    const context = useContext(AuthContext);
 
     const getProduct = useCallback(async () => {
 
@@ -20,6 +23,10 @@ const ProductDetailsPage = () =>{
        setProduct(product);
 
     }, [id]);
+
+    const handleClick = async () =>{
+        await addToCart(id, context.user.id);
+    };
 
     useEffect(() => {
         getProduct();
@@ -41,7 +48,7 @@ const ProductDetailsPage = () =>{
                 <p className={styles.description}>{description}</p>
                 <p>Price: {price}</p>
 
-                <ButtonComponent value="Add to cart">
+                <ButtonComponent onClick={handleClick} value="Add to cart">
                     <AddShoppingCartIcon/>
                 </ButtonComponent>
             </Paper>

@@ -47,7 +47,7 @@ const getNavigation = (user) =>{
         },
         {
             title: "Cart",
-            path: "/cart"
+            path: `/cart/${user ? user.id : null}`
         },
     ];
 

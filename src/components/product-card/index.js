@@ -1,12 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Card, CardActionArea, CardMedia, CardContent, CardActions } from "@material-ui/core";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import Heading from "../heading";
 import LinkComponent from "../link";
 import ButtonComponent from "../button";
-
+import AuthContext from "../../AuthContext";
+import { addToCart } from "../../utils/cart";
 
 const ProductCard = ({imageUrl, title, price, id}) =>{
+
+    const context = useContext(AuthContext);
+
+    const handleClick = async () =>{
+        await addToCart(id, context.user.id);
+    };
 
     return (
         <div>
@@ -26,7 +33,7 @@ const ProductCard = ({imageUrl, title, price, id}) =>{
                     </CardActionArea>
                  </LinkComponent>
                 <CardActions>
-                    <ButtonComponent color="primary" value="Add to cart">
+                    <ButtonComponent onClick={handleClick} color="primary" value="Add to cart">
                         <AddShoppingCartIcon/>
                     </ButtonComponent>
                 </CardActions>
