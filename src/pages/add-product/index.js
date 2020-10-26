@@ -4,16 +4,13 @@ import PageLayout from "../../components/page-layout";
 import styles from "../login/index.module.css";
 import Heading from "../../components/heading";
 import Input from "../../components/input";
-import Box from "@material-ui/core/Box";
 import ButtonComponent from "../../components/button";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
+import {Box, TextField, MenuItem} from "@material-ui/core";
 import {openUploadWidget} from "../../utils/cloudinaryService";
 import {CloudinaryContext} from "cloudinary-react"
 import Notification from "../../components/notification";
-import cloudData from "../../utils/cloudinary";
 
-const AddProductPage = (callback, deps) =>{
+const AddProductPage = () =>{
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -93,15 +90,10 @@ const AddProductPage = (callback, deps) =>{
 
     const beginUpload = tag => {
 
-        const {
-            cloudName,
-            uploadPreset
-        } = cloudData;
-
         const uploadOptions = {
-            cloudName,
+            cloudName: process.env.REACT_APP_CLOUD_NAME,
             tags: [tag],
-            uploadPreset
+            uploadPreset: process.env.REACT_APP_UPLOAD_PRESET
         };
 
         openUploadWidget(uploadOptions, (error, photos) => {
@@ -134,7 +126,7 @@ const AddProductPage = (callback, deps) =>{
             <div className={styles.wrapper}>
                 <Heading type="h4" value="Add Product"/>
 
-                <CloudinaryContext cloudName={cloudData.cloudName}>
+                <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
                     <form>
                         <Input label="Title" type="text" id="title" value={title}
                                onChange={handleTitleChange}/>
