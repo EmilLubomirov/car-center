@@ -1,8 +1,9 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import AuthContext from "../../AuthContext";
 import Container from "@material-ui/core/Container";
-import LinkComponent from "../../components/link";
-import Paper from "@material-ui/core/Paper";
+import PageLayout from "../../components/page-layout";
+import CartProduct from "../../components/cart-product";
+import Heading from "../../components/heading";
 
 const CartPage = () =>{
 
@@ -21,35 +22,63 @@ const CartPage = () =>{
         setProducts(result.products);
     },[context.user.id]);
 
+    const handleClear = useCallback(async (productId) =>{
+
+        const userId = context.user.id;
+
+        const url = `http://localhost:9999/api/cart/remove-from-cart`;
+        const headers =  { 'Content-Type': 'application/json' };
+
+        const body = JSON.stringify({
+            userId,
+            productId
+        });
+
+        const promise = await fetch(url, {
+            method: "POST",
+            headers,
+            body
+        });
+
+        const result = await promise.json();
+
+        setProducts(result.products);
+    }, [context.user.id]);
+
     useEffect(() =>{
         getProducts();
     },[getProducts]);
 
     return (
-
-        <Container maxWidth="md">
+        <PageLayout>
+            <Container maxWidth="md">
                 <div>
-                    {products.isEmpty ? <h3>The cart is empty</h3> :
+                    {products.length === 0 ? (<Heading type="h3" value="The cart is empty"/>) :
                         products.map((p, index) =>{
                             const {
                                 _id,
                                 title,
                                 price,
+                                quantity,
                                 imageUrl
                             } = p.product;
 
+                            const neededQuantity = p.quantity;
+
                             return (
-                                <Paper key={_id}>
-                                    <LinkComponent path={`/product/${_id}`}>
-                                        <img src={imageUrl} alt={title}/>
-                                        <p>{title}</p>
-                                    </LinkComponent>
-                                    <p>Price: {price} lv.</p>
-                                </Paper>
+                               <CartProduct key={index}
+                                            imageUrl={imageUrl}
+                                            title={title}
+                                            price={price}
+                                            neededQuantity={neededQuantity}
+                                            availableQuantity={quantity}
+                                            productId={_id}
+                                            handleClear={() => handleClear(_id)}/>
                             );
                         })}
                 </div>
-        </Container>
+            </Container>
+        </PageLayout>
     )
 };
 

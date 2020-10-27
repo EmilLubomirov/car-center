@@ -1,11 +1,12 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-const Input = ({ id, label, type, value, onChange, name, required, isTextArea }) =>{
+const Input = ({ id, label, type, value, onChange, name, required, isTextArea, min, max}) =>{
 
     return (
         <div>
             <TextField
+                inputProps={{ min: `${min}`, max: `${max}`}}
                 multiline={isTextArea}
                 required={required}
                 id={id}

@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 22px;
+    margin: 20px;
+}
+
+.item{
+    flex: 0 1 25%;
+}
+
+.clearIcon:hover{
+    cursor: pointer;
+}
