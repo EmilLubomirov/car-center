@@ -19,7 +19,9 @@ const CartPage = () =>{
         const promise = await fetch(url);
         const result = await promise.json();
 
-        setProducts(result.products);
+        const cartProducts = result.products ? result.products : [];
+
+        setProducts(cartProducts);
     },[context.user.id]);
 
     const handleClear = useCallback(async (productId) =>{
@@ -63,16 +65,17 @@ const CartPage = () =>{
                                 imageUrl
                             } = p.product;
 
-                            const neededQuantity = p.quantity;
+                            const requestedQuantity = p.quantity;
 
                             return (
                                <CartProduct key={index}
                                             imageUrl={imageUrl}
                                             title={title}
                                             price={price}
-                                            neededQuantity={neededQuantity}
+                                            requestedQuantity={requestedQuantity}
                                             availableQuantity={quantity}
                                             productId={_id}
+                                            userId={context.user.id}
                                             handleClear={() => handleClear(_id)}/>
                             );
                         })}
