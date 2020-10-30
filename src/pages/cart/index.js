@@ -1,15 +1,20 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
+import {useHistory} from "react-router-dom"
 import AuthContext from "../../AuthContext";
 import Container from "@material-ui/core/Container";
 import PageLayout from "../../components/page-layout";
 import CartProduct from "../../components/cart-product";
 import Heading from "../../components/heading";
+import {CART_CONSTANTS} from "../../utils/cart";
+import ButtonComponent from "../../components/button";
 
 const CartPage = () =>{
 
     const context = useContext(AuthContext);
+    const history = useHistory();
 
     const [products, setProducts] = useState([]);
+    const [totalPrice, setTotalPrice] = useState('');
 
     const getProducts = useCallback(async () =>{
 
@@ -47,6 +52,25 @@ const CartPage = () =>{
         setProducts(result.products);
     }, [context.user.id]);
 
+    const handleShoppingClick = () =>{
+        history.push('/');
+    };
+
+    const handleOrderClick = () =>{
+        history.push(`/order/${context.user.id}`, {
+            products,
+            totalPrice
+        });
+    };
+
+    useEffect(() =>{
+
+        const price = products.map(p => p.product.price * p.quantity)
+            .reduce((acc, curr) => acc + curr, 0);
+
+        setTotalPrice(price.toFixed(2));
+    }, [products]);
+
     useEffect(() =>{
         getProducts();
     },[getProducts]);
@@ -65,7 +89,13 @@ const CartPage = () =>{
                                 imageUrl
                             } = p.product;
 
-                            const requestedQuantity = p.quantity;
+                            const MAX_PRODUCT_QUANTITY = CART_CONSTANTS.MAX_PRODUCT_QUANTITY;
+                            
+                            const maxQuantity = MAX_PRODUCT_QUANTITY > quantity ?
+                                                quantity : MAX_PRODUCT_QUANTITY;
+
+                            const requestedQuantity = p.quantity < MAX_PRODUCT_QUANTITY ? p.quantity :
+                                                                    MAX_PRODUCT_QUANTITY;
 
                             return (
                                <CartProduct key={index}
@@ -73,12 +103,23 @@ const CartPage = () =>{
                                             title={title}
                                             price={price}
                                             requestedQuantity={requestedQuantity}
-                                            availableQuantity={quantity}
+                                            maxQuantity={maxQuantity}
                                             productId={_id}
                                             userId={context.user.id}
+                                            handleUpdate={getProducts}
                                             handleClear={() => handleClear(_id)}/>
                             );
                         })}
+                </div>
+                <div>
+                    <div>
+                        {
+                            products.length > 0 ? (<strong>Total price: {totalPrice}</strong>) : null
+                        }
+                    </div>
+
+                    <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
+                    <ButtonComponent onClick={handleOrderClick} value="Make order"/>
                 </div>
             </Container>
         </PageLayout>

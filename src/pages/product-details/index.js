@@ -46,7 +46,7 @@ const ProductDetailsPage = () =>{
 
                 <Heading type="h4" value={title}/>
                 <p className={styles.description}>{description}</p>
-                <p>Price: {price}</p>
+                <p>Price: {price} lv.</p>
 
                 <ButtonComponent onClick={handleClick} value="Add to cart">
                     <AddShoppingCartIcon/>

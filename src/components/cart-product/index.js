@@ -6,7 +6,8 @@ import styles from "./index.module.css";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
-const CartProduct = ({ imageUrl, title, price, requestedQuantity, availableQuantity, productId, userId, handleClear }) =>{
+const CartProduct = ({ imageUrl, title, price, requestedQuantity, maxQuantity,
+                         productId, userId, handleUpdate, handleClear }) =>{
 
     const [amount, setAmount] = useState('');
     const [productEndPrice, setProductEndPrice] = useState('');
@@ -40,9 +41,11 @@ const CartProduct = ({ imageUrl, title, price, requestedQuantity, availableQuant
         const currentPrice = parseInt(amount) * price;
         setProductEndPrice(currentPrice.toFixed(2));
 
-        updateQuantityInDb(amount);
+        updateQuantityInDb(amount).then(() =>{
+            handleUpdate();
+        });
 
-    }, [amount, price, updateQuantityInDb]);
+    }, [amount, price, handleUpdate, productEndPrice, updateQuantityInDb]);
 
     useEffect(  () =>{
         setAmount(requestedQuantity);
@@ -55,7 +58,7 @@ const CartProduct = ({ imageUrl, title, price, requestedQuantity, availableQuant
             </figure>
             <TextField id="select" label="Qty" value={amount} select onChange={handleAmountChange}>
                 {
-                    [...Array(availableQuantity + 1).keys()].slice(1).map(val =>{
+                    [...Array(maxQuantity + 1).keys()].slice(1).map(val =>{
                         return <MenuItem key={val} value={val}>{val}</MenuItem>
                     })
                 }
