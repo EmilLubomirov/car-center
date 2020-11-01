@@ -5,6 +5,7 @@ import Input from "../../components/input";
 import Box from "@material-ui/core/Box";
 import ButtonComponent from "../../components/button";
 import Notification from "../../components/notification";
+import styles from "./index.module.css";
 
 const OrderPage = () =>{
 
@@ -14,6 +15,11 @@ const OrderPage = () =>{
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
     const [totalPrice, setTotalPrice] = useState('');
+    const [message, setMessage] = useState({
+        isOpen: false,
+        value: "",
+        type: ""
+    });
 
     const location = useLocation();
     const params = useParams();
@@ -39,9 +45,12 @@ const OrderPage = () =>{
       setAddress(e.target.value);
     };
 
-    useEffect(() =>{
-        setTotalPrice(location.state.totalPrice || []);
-    }, [totalPrice, location.state.totalPrice]);
+    const handleMessageClose = () =>{
+        setMessage({
+            ...message,
+            isOpen: false
+        })
+    };
 
     const handleSubmit = async () =>{
         const { products } = location.state;
@@ -62,19 +71,35 @@ const OrderPage = () =>{
             totalPrice
         });
 
-
-        const promise = await fetch(url, {
+        fetch(url, {
             method: "POST",
             headers,
             body
-        });
+        }).then(response => {
 
-        await promise.json();
-        history.push('/');
+            if (response.status > 201){
+                setMessage({
+                    isOpen: true,
+                    value: "Please, enter valid data!",
+                    type: "error"
+                });
+            }
+
+            else {
+                history.push('/', {
+                    message: "Successfully made order",
+                    type: "success"
+                });
+            }
+        });
     };
 
+    useEffect(() =>{
+        setTotalPrice(location.state.totalPrice || []);
+    }, [totalPrice, location.state.totalPrice]);
+
     return(
-        <div>
+        <div className={styles.wrapper}>
             <Heading type="h3" value="Order details"/>
 
             <form>
@@ -94,6 +119,12 @@ const OrderPage = () =>{
                                      onClick={handleSubmit}/>
                 </Box>
             </form>
+
+            <Notification type={message.type}
+                          message={message.value}
+                          isOpen={message.isOpen}
+                          duration={5000}
+                          onClose={handleMessageClose}/>
         </div>
     )
 };

@@ -35,7 +35,7 @@ const getNavigation = (user) =>{
         ...commonLinks,
         {
             title: "Cart",
-            path: "/cart"
+            path: `/cart/${user ? user.id : null}`
         },
     ];
 

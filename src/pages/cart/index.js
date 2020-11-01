@@ -7,6 +7,7 @@ import CartProduct from "../../components/cart-product";
 import Heading from "../../components/heading";
 import {CART_CONSTANTS} from "../../utils/cart";
 import ButtonComponent from "../../components/button";
+import Grid from "@material-ui/core/Grid";
 
 const CartPage = () =>{
 
@@ -77,8 +78,8 @@ const CartPage = () =>{
 
     return (
         <PageLayout>
-            <Container maxWidth="md">
-                <div>
+            <Grid container maxWidth="md">
+                <Grid item xs={9}>
                     {products.length === 0 ? (<Heading type="h3" value="The cart is empty"/>) :
                         products.map((p, index) =>{
                             const {
@@ -90,12 +91,12 @@ const CartPage = () =>{
                             } = p.product;
 
                             const MAX_PRODUCT_QUANTITY = CART_CONSTANTS.MAX_PRODUCT_QUANTITY;
-                            
+
                             const maxQuantity = MAX_PRODUCT_QUANTITY > quantity ?
                                                 quantity : MAX_PRODUCT_QUANTITY;
 
-                            const requestedQuantity = p.quantity < MAX_PRODUCT_QUANTITY ? p.quantity :
-                                                                    MAX_PRODUCT_QUANTITY;
+                            const requestedQuantity = p.quantity <  quantity ?
+                                                        p.quantity  : quantity;
 
                             return (
                                <CartProduct key={index}
@@ -110,18 +111,19 @@ const CartPage = () =>{
                                             handleClear={() => handleClear(_id)}/>
                             );
                         })}
-                </div>
-                <div>
-                    <div>
-                        {
-                            products.length > 0 ? (<strong>Total price: {totalPrice}</strong>) : null
-                        }
-                    </div>
+                </Grid>
+                <Grid>
+                    {
+                        products.length > 0 ? (
+                            <>
+                                <strong>Total price: {totalPrice}</strong>
+                                <ButtonComponent onClick={handleOrderClick} value="Make order"/>
+                            </>) : null
+                    }
 
                     <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
-                    <ButtonComponent onClick={handleOrderClick} value="Make order"/>
-                </div>
-            </Container>
+                </Grid>
+            </Grid>
         </PageLayout>
     )
 };
