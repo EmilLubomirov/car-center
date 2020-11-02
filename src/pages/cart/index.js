@@ -1,7 +1,6 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom"
 import AuthContext from "../../AuthContext";
-import Container from "@material-ui/core/Container";
 import PageLayout from "../../components/page-layout";
 import CartProduct from "../../components/cart-product";
 import Heading from "../../components/heading";

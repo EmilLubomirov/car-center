@@ -110,7 +110,7 @@ const AddProductPage = () =>{
 
     const getProductTags = useCallback(async () => {
 
-        const url = 'http://localhost:9999/api/tag';
+        const url = 'http://localhost:9999/api/product-tag';
 
         const promise = await fetch(url);
         const tags = await promise.json();

@@ -7,6 +7,7 @@ import StorePage from "./pages/store";
 import ProductDetailsPage from "./pages/product-details";
 import CartPage from "./pages/cart";
 import OrderPage from "./pages/order";
+import ServicesPage from "./pages/services";
 
 const Navigation = () =>{
 
@@ -19,6 +20,7 @@ const Navigation = () =>{
             <Route path="/product/:id" component={ProductDetailsPage}/>
             <Route path="/cart/:userId" component={CartPage}/>
             <Route path="/order/:userId" component={OrderPage}/>
+            <Route path="/services" component={ServicesPage}/>
         </Switch>
     )
 };
