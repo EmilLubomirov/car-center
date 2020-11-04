@@ -8,10 +8,16 @@ import styles from "./index.module.css";
 import Paper from "@material-ui/core/Paper";
 import {addToCart} from "../../utils/cart";
 import AuthContext from "../../AuthContext";
+import Notification from "../../components/notification";
 
 const ProductDetailsPage = () =>{
 
     const [product, setProduct] = useState({});
+    const [message, setMessage] = useState({
+        isOpen: false,
+        value: "",
+        type: ""
+    });
     const { id } = useParams();
     const context = useContext(AuthContext);
 
@@ -25,7 +31,26 @@ const ProductDetailsPage = () =>{
     }, [id]);
 
     const handleClick = async () =>{
+
+        const { user } = context;
+
+        if (!user){
+            setMessage({
+                isOpen: true,
+                value: "You should be logged in first!",
+                type: "error"
+            });
+            return;
+        }
+
         await addToCart(id, context.user.id);
+    };
+
+    const handleMessageClose = () =>{
+        setMessage({
+            ...message,
+            isOpen: false
+        })
     };
 
     useEffect(() => {
@@ -52,6 +77,12 @@ const ProductDetailsPage = () =>{
                     <AddShoppingCartIcon/>
                 </ButtonComponent>
             </Paper>
+
+            <Notification type={message.type}
+                          message={message.value}
+                          isOpen={message.isOpen}
+                          duration={5000}
+                          onClose={handleMessageClose}/>
         </PageLayout>
     )
 };

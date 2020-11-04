@@ -62,6 +62,18 @@ const ServicesPage = () =>{
 
     const handleClick = () =>{
 
+        const { user } = context;
+
+        if (!user){
+            setMessage({
+                isOpen: true,
+                value: "You should be logged in first!",
+                type: "error"
+            });
+
+            return;
+        }
+
         const url = "http://localhost:9999/api/service";
         const headers = { 'Content-Type': 'application/json' };
         const body = JSON.stringify({
@@ -87,7 +99,7 @@ const ServicesPage = () =>{
             else{
                 setMessage({
                     isOpen: true,
-                    value: "Service appointment failed! Try again!",
+                    value: "Either data is invalid or date is busy! Try again!",
                     type: "error"
                 });
             }

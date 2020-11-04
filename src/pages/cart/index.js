@@ -42,7 +42,7 @@ const CartPage = () =>{
         });
 
         const promise = await fetch(url, {
-            method: "POST",
+            method: "DELETE",
             headers,
             body
         });
@@ -77,10 +77,10 @@ const CartPage = () =>{
 
     return (
         <PageLayout>
-            <Grid container maxWidth="md">
+            <Grid container>
                 <Grid item xs={9}>
                     {products.length === 0 ? (<Heading type="h3" value="The cart is empty"/>) :
-                        products.map((p, index) =>{
+                        products.map(p =>{
                             const {
                                 _id,
                                 title,
@@ -94,11 +94,11 @@ const CartPage = () =>{
                             const maxQuantity = MAX_PRODUCT_QUANTITY > quantity ?
                                                 quantity : MAX_PRODUCT_QUANTITY;
 
-                            const requestedQuantity = p.quantity <  quantity ?
-                                                        p.quantity  : quantity;
+                            const requestedQuantity = p.quantity >  maxQuantity ?
+                                                        maxQuantity  : p.quantity;
 
                             return (
-                               <CartProduct key={index}
+                               <CartProduct key={_id}
                                             imageUrl={imageUrl}
                                             title={title}
                                             price={price}

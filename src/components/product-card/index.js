@@ -7,11 +7,19 @@ import ButtonComponent from "../button";
 import AuthContext from "../../AuthContext";
 import { addToCart } from "../../utils/cart";
 
-const ProductCard = ({imageUrl, title, price, id}) =>{
+const ProductCard = ({imageUrl, title, price, id, handleError}) =>{
 
     const context = useContext(AuthContext);
 
     const handleClick = async () =>{
+
+        const { user } = context;
+
+        if (!user){
+            handleError("You should be logged in first!");
+            return;
+        }
+
         await addToCart(id, context.user.id);
     };
 

@@ -3,10 +3,16 @@ import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
 import ProductCard from "../../components/product-card";
 import Grid from "@material-ui/core/Grid";
+import Notification from "../../components/notification";
 
 const StorePage = () =>{
 
     const [products, setProducts] = useState([]);
+    const [message, setMessage] = useState({
+        isOpen: false,
+        value: "",
+        type: ""
+    });
 
     const getProducts = useCallback(async () =>{
 
@@ -15,6 +21,21 @@ const StorePage = () =>{
 
        setProducts(result);
     }, []);
+
+    const handleError = (message) =>{
+        setMessage({
+            isOpen: true,
+            value: message,
+            type: "error"
+        });
+    };
+
+    const handleMessageClose = () =>{
+        setMessage({
+            ...message,
+            isOpen: false
+        })
+    };
 
     useEffect(() =>{
         getProducts();
@@ -34,11 +55,18 @@ const StorePage = () =>{
                             <ProductCard imageUrl={product.imageUrl}
                                          title={product.title}
                                          price={product.price}
-                                         id={product._id}/>
+                                         id={product._id}
+                                         handleError={handleError}/>
                         </Grid>)
                     })}
                 </Grid>
             </div>
+
+            <Notification type={message.type}
+                          message={message.value}
+                          isOpen={message.isOpen}
+                          duration={5000}
+                          onClose={handleMessageClose}/>
         </PageLayout>
     )
 };

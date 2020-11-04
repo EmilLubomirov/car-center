@@ -41,11 +41,11 @@ const CartProduct = ({ imageUrl, title, price, requestedQuantity, maxQuantity,
         const currentPrice = parseInt(amount) * price;
         setProductEndPrice(currentPrice.toFixed(2));
 
-        updateQuantityInDb(amount).then(() =>{
+        updateQuantityInDb(amount).then(() => {
             handleUpdate();
         });
 
-    }, [amount, price, handleUpdate, productEndPrice, updateQuantityInDb]);
+    }, [amount, price, handleUpdate, updateQuantityInDb]);
 
     useEffect(  () =>{
         setAmount(requestedQuantity);
