@@ -1,0 +1,22 @@
+.wrapper{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    max-width: 70%;
+    margin: 30px auto;
+    padding: 30px 40px;
+}
+
+.image{
+    display: block;
+    max-height: unset;
+    max-width: 60%;
+    margin: 0 auto;
+    border-radius: 4px;
+}
+
+.description {
+    font-size: 17px;
+    margin: 30px auto;
+    line-height: 1.7;
+}
