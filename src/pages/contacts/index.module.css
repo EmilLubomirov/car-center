@@ -1,0 +1,14 @@
+.wrapper{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 30px;
+    max-width: 80%;
+    margin: 30px auto;
+}
+
+.heading{
+    margin-bottom: 50px;
+    text-align: center;
+    flex: 0 1 100%;
+}

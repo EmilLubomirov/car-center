@@ -9,6 +9,7 @@ import CartPage from "./pages/cart";
 import OrderPage from "./pages/order";
 import ServicesPage from "./pages/services";
 import AboutPage from "./pages/about";
+import ContactsPage from "./pages/contacts";
 
 const Navigation = () =>{
 
@@ -23,6 +24,7 @@ const Navigation = () =>{
             <Route path="/order/:userId" component={OrderPage}/>
             <Route path="/services" component={ServicesPage}/>
             <Route path="/about" component={AboutPage}/>
+            <Route path="/contacts" component={ContactsPage}/>
         </Switch>
     )
 };

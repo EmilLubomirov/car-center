@@ -2,8 +2,8 @@ import React from "react";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
 import Paper from "@material-ui/core/Paper";
-import styles from "./index.module.css";
 import ServicesList from "../../components/services-list";
+import styles from "./index.module.css";
 
 const AboutPage = () =>{
 
@@ -12,12 +12,13 @@ const AboutPage = () =>{
             <Paper className={styles.wrapper}>
                 <Heading type="h4" value="About"/>
                 <figure>
-                    <img className={styles.image} src="https://res.cloudinary.com/dglrremy3/image/upload/v1604498894/mechanic_vuzr4q.jpg"
+                    <img className={styles.image}
+                         src={`https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/v1604498894/mechanic_vuzr4q.jpg`}
                          alt="mechanic"/>
                 </figure>
 
                 <div className={styles.description}>
-                    Car center is a company with over 20 years of experience since it has been created.
+                   <i className={styles.company}>Car Center</i> is a company with over 20 years of experience since it has been created.
                     Here you will meet our 5 high qualified mechanics who are so kind and ready to help you at any time.
                     You are able to choose from 3 main services:
 
