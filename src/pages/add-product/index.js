@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import styles from "../login/index.module.css";
@@ -9,6 +9,7 @@ import {Box, TextField, MenuItem} from "@material-ui/core";
 import {openUploadWidget} from "../../utils/cloudinaryService";
 import {CloudinaryContext} from "cloudinary-react"
 import Notification from "../../components/notification";
+import {getProductTags} from "../../utils/product-tag";
 
 const AddProductPage = () =>{
 
@@ -58,7 +59,7 @@ const AddProductPage = () =>{
     const handleSubmit = (e) =>{
         e.preventDefault();
 
-        fetch("http://localhost:9999/api/product", {
+        fetch("http://localhost:9999/api/product/create", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -108,18 +109,11 @@ const AddProductPage = () =>{
         });
     };
 
-    const getProductTags = useCallback(async () => {
-
-        const url = 'http://localhost:9999/api/product-tag';
-
-        const promise = await fetch(url);
-        const tags = await promise.json();
-        setTags([...tags]);
-    }, []);
-
     useEffect(() =>{
-        getProductTags();
-    }, [getProductTags]);
+        getProductTags().then(tags => {
+            setTags(tags);
+        });
+    }, []);
 
     return (
         <PageLayout>

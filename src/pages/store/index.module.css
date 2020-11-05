@@ -1,8 +1,27 @@
 .wrapper{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
     padding: 40px;
+}
+
+.heading{
+    margin-bottom: 40px;
+}
+
+.heading, .pagination{
+    flex: 0 1 100%;
 }
 
 .pagination{
     margin: 20px auto;
     max-width: fit-content;
+}
+
+.selection{
+    flex: 0 1 20%;
+}
+
+.products{
+    flex: 0 75%;
 }
