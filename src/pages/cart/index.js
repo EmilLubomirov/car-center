@@ -4,7 +4,7 @@ import AuthContext from "../../AuthContext";
 import PageLayout from "../../components/page-layout";
 import CartProduct from "../../components/cart-product";
 import Heading from "../../components/heading";
-import {CART_CONSTANTS} from "../../utils/cart";
+import {CART} from "../../utils/constants";
 import ButtonComponent from "../../components/button";
 import Grid from "@material-ui/core/Grid";
 
@@ -89,7 +89,7 @@ const CartPage = () =>{
                                 imageUrl
                             } = p.product;
 
-                            const MAX_PRODUCT_QUANTITY = CART_CONSTANTS.MAX_PRODUCT_QUANTITY;
+                            const MAX_PRODUCT_QUANTITY = CART.MAX_PRODUCT_QUANTITY;
 
                             const maxQuantity = MAX_PRODUCT_QUANTITY > quantity ?
                                                 quantity : MAX_PRODUCT_QUANTITY;

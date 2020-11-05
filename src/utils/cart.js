@@ -16,7 +16,3 @@ export const addToCart = async (productId, userId) =>{
 
    return await promise.json();
 };
-
-export const CART_CONSTANTS = {
-    MAX_PRODUCT_QUANTITY: 10
-};

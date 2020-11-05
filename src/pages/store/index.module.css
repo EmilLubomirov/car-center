@@ -1,0 +1,8 @@
+.wrapper{
+    padding: 40px;
+}
+
+.pagination{
+    margin: 20px auto;
+    max-width: fit-content;
+}
