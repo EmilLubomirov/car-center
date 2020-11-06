@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {useHistory} from "react-router-dom"
 import AuthContext from "../../AuthContext";
 import PageLayout from "../../components/page-layout";
@@ -10,11 +10,13 @@ import Grid from "@material-ui/core/Grid";
 
 const CartPage = () =>{
 
+    const [products, setProducts] = useState([]);
+    const [totalPrice, setTotalPrice] = useState('');
+
     const context = useContext(AuthContext);
     const history = useHistory();
 
-    const [products, setProducts] = useState([]);
-    const [totalPrice, setTotalPrice] = useState('');
+    let isCancelled = useRef(false);
 
     const getProducts = useCallback(async () =>{
 
@@ -26,8 +28,10 @@ const CartPage = () =>{
 
         const cartProducts = result.products ? result.products : [];
 
-        setProducts(cartProducts);
-    },[context.user.id]);
+        if (!isCancelled.current){
+            setProducts(cartProducts);
+        }
+    },[context.user.id, isCancelled]);
 
     const handleClear = useCallback(async (productId) =>{
 
@@ -74,6 +78,12 @@ const CartPage = () =>{
     useEffect(() =>{
         getProducts();
     },[getProducts]);
+
+    useEffect(() => {
+        return () => {
+            isCancelled.current = true;
+        };
+    }, []);
 
     return (
         <PageLayout>
