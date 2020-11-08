@@ -31,6 +31,12 @@ const ContactsPage = () =>{
                    <p>
                        Facebook: Car-Center
                    </p>
+                   <p>
+                       Working schedule: Monday - Friday
+                   </p>
+                   <p>
+                       9:00 - 19:00
+                   </p>
                </div>
            </Paper>
         </PageLayout>

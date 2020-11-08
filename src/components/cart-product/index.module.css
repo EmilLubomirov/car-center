@@ -10,6 +10,10 @@
     flex: 0 1 25%;
 }
 
+.item:hover{
+    text-decoration: underline;
+}
+
 .clearIcon:hover{
     cursor: pointer;
 }

@@ -8,16 +8,19 @@ const  App = (props) => {
 
     const [state, setState] = useState({
         user: undefined,
+        isLoading: true,
         login: (user) =>{
             setState({
                 ...state,
                 user: { ...user, isLoggedIn: true},
+                isLoading: false
             });
         },
         logout: () =>{
             setState({
                 ...state,
                 user: null,
+                isLoading: false
             });
         }
     });
@@ -28,6 +31,7 @@ const  App = (props) => {
         setState({
             ...state,
             user,
+            isLoading: false
         });
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

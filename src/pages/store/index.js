@@ -84,7 +84,7 @@ const StorePage = () =>{
         const { checked, value } = e.target;
 
         if (checked){
-            const updated = ([...selectedTags, value]);
+            const updated = [...selectedTags, value];
             setSelectedTags(updated);
         }
 
@@ -133,7 +133,8 @@ const StorePage = () =>{
                 <div className={styles.selection}>
                     <FormGroup>
                         {tags.map(t => {
-                            return <CheckboxComponent key={t._id} value={t.name} handleChange={handleChange}/>
+                            return <CheckboxComponent key={t._id} value={t.name} color="primary"
+                                                      handleChange={handleChange}/>
                         })}
                     </FormGroup>
                 </div>
