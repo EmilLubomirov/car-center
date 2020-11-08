@@ -10,6 +10,7 @@ import OrderPage from "./pages/order";
 import ServicesPage from "./pages/services";
 import AboutPage from "./pages/about";
 import ContactsPage from "./pages/contacts";
+import ErrorPage from "./pages/error";
 
 const Navigation = () =>{
 
@@ -25,6 +26,7 @@ const Navigation = () =>{
             <Route path="/services" component={ServicesPage}/>
             <Route path="/about" component={AboutPage}/>
             <Route path="/contacts" component={ContactsPage}/>
+            <Route component={ErrorPage}/>
         </Switch>
     )
 };

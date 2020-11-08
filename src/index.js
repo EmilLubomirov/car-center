@@ -5,14 +5,17 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
 import Navigation from "./navigation";
+import ErrorBoundary from "./ErrorBoundary";
 
 ReactDOM.render(
   <React.StrictMode>
-      <App>
-          <BrowserRouter>
-              <Navigation/>
-          </BrowserRouter>
-      </App>
+      <ErrorBoundary>
+          <App>
+              <BrowserRouter>
+                  <Navigation/>
+              </BrowserRouter>
+          </App>
+      </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root')
 );
