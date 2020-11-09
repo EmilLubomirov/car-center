@@ -71,27 +71,26 @@ const OrderPage = () =>{
             totalPrice
         });
 
-        fetch(url, {
+        const response = await fetch(url, {
             method: "POST",
             headers,
             body
-        }).then(response => {
-
-            if (response.status > 201){
-                setMessage({
-                    isOpen: true,
-                    value: "Please, enter valid data!",
-                    type: "error"
-                });
-            }
-
-            else {
-                history.push('/', {
-                    message: "Successfully made order",
-                    type: "success"
-                });
-            }
         });
+
+        if (response.status > 201){
+            setMessage({
+                isOpen: true,
+                value: "Please, enter valid data!",
+                type: "error"
+            });
+        }
+
+        else {
+            history.push('/', {
+                message: "Successfully made order",
+                type: "success"
+            });
+        }
     };
 
     useEffect(() =>{

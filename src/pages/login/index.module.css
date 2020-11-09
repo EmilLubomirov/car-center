@@ -1,6 +1,22 @@
-.wrapper{
+.container{
     display: flex;
     flex-flow: column;
     align-items: center;
+    max-width: 50%;
+    margin: 30px auto;
+}
+
+.wrapper{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
     margin: 85px auto;
+    height: 250px;
+}
+
+.form {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
 }

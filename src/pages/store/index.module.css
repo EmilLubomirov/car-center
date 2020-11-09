@@ -9,6 +9,11 @@
     margin-bottom: 40px;
 }
 
+.loader{
+   margin-top: 15%;
+    margin-left: 47%;
+}
+
 .heading, .pagination{
     flex: 0 1 100%;
 }

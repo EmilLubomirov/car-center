@@ -1,6 +1,16 @@
-.wrapper{
+.container{
     display: flex;
     flex-flow: column;
     align-items: center;
+    max-width: 50%;
+    margin: 30px auto;
+}
+
+.wrapper{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 340px;
     margin: 50px auto;
 }

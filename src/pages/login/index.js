@@ -6,9 +6,9 @@ import Input from "../../components/input";
 import ButtonComponent from "../../components/button";
 import AuthContext from "../../AuthContext";
 import {authenticate} from "../../utils/auth";
-import styles from "./index.module.css";
-import Box from "@material-ui/core/Box";
 import Notification from "../../components/notification";
+import Paper from "@material-ui/core/Paper";
+import styles from "./index.module.css";
 
 const LoginPage = () =>{
 
@@ -78,25 +78,28 @@ const LoginPage = () =>{
 
     return (
         <PageLayout>
-            <div className={styles.wrapper}>
-                <Heading type="h4" value="Login"/>
-                <form>
-                    <Input label="Username" type="text" id="username" value={username}
-                           onChange={handleUsernameChange}/>
-                    <Input label="Password" type="password" id="password" value={password}
-                           onChange={handlePasswordChange}/>
-                     <Box textAlign="center">
-                         <ButtonComponent value="Login"
-                                          onClick={handleSubmit}/>
-                     </Box>
+            <Paper className={styles.container}>
+                <div className={styles.wrapper}>
+                    <div className={styles.heading}>
+                        <Heading type="h4" value="Login"/>
+                    </div>
+                    <form className={styles.form}>
+                        <Input label="Username" type="text" id="username" value={username}
+                               onChange={handleUsernameChange}/>
+                        <Input label="Password" type="password" id="password" value={password}
+                               onChange={handlePasswordChange}/>
 
-                    <Notification type={message.type}
-                                         message={message.value}
-                                         isOpen={message.isOpen}
-                                         duration={5000}
-                                         onClose={handleMessageClose}/>
-                </form>
-            </div>
+                        <ButtonComponent value="Login"
+                                         onClick={handleSubmit}/>
+
+                        <Notification type={message.type}
+                                      message={message.value}
+                                      isOpen={message.isOpen}
+                                      duration={5000}
+                                      onClose={handleMessageClose}/>
+                    </form>
+                </div>
+            </Paper>
         </PageLayout>
     )
 };

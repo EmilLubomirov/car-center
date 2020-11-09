@@ -11,6 +11,7 @@ import styles from "./index.module.css";
 import {getProductTags} from "../../utils/product-tag";
 import FormGroup from "@material-ui/core/FormGroup";
 import CheckboxComponent from "../../components/checkbox";
+import LoadingBar from "../../components/loading-bar";
 
 const StorePage = () =>{
 
@@ -24,6 +25,7 @@ const StorePage = () =>{
         value: "",
         type: ""
     });
+    const [isLoading, setLoading] = useState(true);
 
     const location = useLocation();
     const history = useHistory();
@@ -112,6 +114,7 @@ const StorePage = () =>{
     useEffect(() => {
         getProductTags().then(tags => {
             setTags(tags);
+            setLoading(false);
         });
     }, []);
 
@@ -126,49 +129,59 @@ const StorePage = () =>{
 
     return (
         <PageLayout>
-            <div className={styles.wrapper}>
+            {
+                isLoading ? (
+                    <div className={styles.loader}>
+                        <LoadingBar type="spin" color="black" width="8%" height="8%"/>
+                    </div>
+                ) : (
+                    <div>
+                        <div className={styles.wrapper}>
 
-                <div className={styles.heading}>
-                    <Heading type="h4" value="Products"/>
-                </div>
+                            <div className={styles.heading}>
+                                <Heading type="h4" value="Products"/>
+                            </div>
 
-                <div className={styles.selection}>
-                    <FormGroup>
-                        {tags.map(t => {
-                            return <CheckboxComponent key={t._id} value={t.name} color="primary"
-                                                      isChecked={selectedTags.includes(t.name)}
-                                                      handleChange={handleChange}/>
-                        })}
-                    </FormGroup>
-                </div>
+                            <div className={styles.selection}>
+                                <FormGroup>
+                                    {tags.map(t => {
+                                        return <CheckboxComponent key={t._id} value={t.name} color="primary"
+                                                                  isChecked={selectedTags.includes(t.name)}
+                                                                  handleChange={handleChange}/>
+                                    })}
+                                </FormGroup>
+                            </div>
 
-                <div className={styles.products}>
-                    <Grid   container
-                            direction="row"
-                            alignItems="center"
-                            spacing={4}>
-                        {products.map(product => {
-                            return (<Grid key={product._id} item xs={3}>
-                                <ProductCard imageUrl={product.imageUrl}
-                                             title={product.title}
-                                             price={product.price}
-                                             id={product._id}
-                                             handleError={handleError}/>
-                            </Grid>)
-                        })}
-                    </Grid>
-                </div>
-            </div>
+                            <div className={styles.products}>
+                                <Grid   container
+                                        direction="row"
+                                        alignItems="center"
+                                        spacing={4}>
+                                    {products.map(product => {
+                                        return (<Grid key={product._id} item xs={3}>
+                                            <ProductCard imageUrl={product.imageUrl}
+                                                         title={product.title}
+                                                         price={product.price}
+                                                         id={product._id}
+                                                         handleError={handleError}/>
+                                        </Grid>)
+                                    })}
+                                </Grid>
+                            </div>
+                        </div>
 
-            <Notification type={message.type}
-                          message={message.value}
-                          isOpen={message.isOpen}
-                          duration={5000}
-                          onClose={handleMessageClose}/>
+                        <Notification type={message.type}
+                                      message={message.value}
+                                      isOpen={message.isOpen}
+                                      duration={5000}
+                                      onClose={handleMessageClose}/>
 
-             <div className={styles.pagination}>
-                 <PaginationComponent pageCount={pageCount} pageUrl="/" size="large"/>
-             </div>
+                        <div className={styles.pagination}>
+                            <PaginationComponent pageCount={pageCount} pageUrl="/" size="large"/>
+                        </div>
+                    </div>
+                )
+            }
         </PageLayout>
     )
 };

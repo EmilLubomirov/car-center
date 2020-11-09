@@ -5,13 +5,16 @@ import PageLayout from "../../components/page-layout";
 import CartProduct from "../../components/cart-product";
 import Heading from "../../components/heading";
 import {CART} from "../../utils/constants";
-import ButtonComponent from "../../components/button";
 import Grid from "@material-ui/core/Grid";
+import ButtonComponent from "../../components/button";
+import LoadingBar from "../../components/loading-bar";
+import styles from "./index.module.css";
 
 const CartPage = () =>{
 
     const [products, setProducts] = useState([]);
     const [totalPrice, setTotalPrice] = useState('');
+    const [isLoading, setLoading] = useState(true);
 
     const context = useContext(AuthContext);
     const history = useHistory();
@@ -76,7 +79,9 @@ const CartPage = () =>{
     }, [products]);
 
     useEffect(() =>{
-        getProducts();
+        getProducts().then(() => {
+            setLoading(false);
+        });
     },[getProducts]);
 
     useEffect(() => {
@@ -87,52 +92,61 @@ const CartPage = () =>{
 
     return (
         <PageLayout>
-            <Grid container>
-                <Grid item xs={9}>
-                    {products.length === 0 ? (<Heading type="h3" value="The cart is empty"/>) :
-                        products.map(p =>{
-                            const {
-                                _id,
-                                title,
-                                price,
-                                quantity,
-                                imageUrl
-                            } = p.product;
+            {
+                isLoading ? (
+                    <div className={styles.loader}>
+                        <LoadingBar type="spin" color="black" width="8%" height="8%"/>
+                    </div> ) :(
+                    <div>
+                        <Grid container>
+                            <Grid item xs={9}>
+                                {products.length === 0 ? (<Heading type="h3" value="The cart is empty"/>) :
+                                    products.map(p =>{
+                                        const {
+                                            _id,
+                                            title,
+                                            price,
+                                            quantity,
+                                            imageUrl
+                                        } = p.product;
 
-                            const MAX_PRODUCT_QUANTITY = CART.MAX_PRODUCT_QUANTITY;
+                                        const MAX_PRODUCT_QUANTITY = CART.MAX_PRODUCT_QUANTITY;
 
-                            const maxQuantity = MAX_PRODUCT_QUANTITY > quantity ?
-                                                quantity : MAX_PRODUCT_QUANTITY;
+                                        const maxQuantity = MAX_PRODUCT_QUANTITY > quantity ?
+                                            quantity : MAX_PRODUCT_QUANTITY;
 
-                            const requestedQuantity = p.quantity >  maxQuantity ?
-                                                        maxQuantity  : p.quantity;
+                                        const requestedQuantity = p.quantity >  maxQuantity ?
+                                            maxQuantity  : p.quantity;
 
-                            return (
-                               <CartProduct key={_id}
-                                            imageUrl={imageUrl}
-                                            title={title}
-                                            price={price}
-                                            requestedQuantity={requestedQuantity}
-                                            maxQuantity={maxQuantity}
-                                            productId={_id}
-                                            userId={context.user.id}
-                                            handleUpdate={getProducts}
-                                            handleClear={() => handleClear(_id)}/>
-                            );
-                        })}
-                </Grid>
-                <Grid>
-                    {
-                        products.length > 0 ? (
-                            <>
-                                <strong>Total price: {totalPrice}</strong>
-                                <ButtonComponent onClick={handleOrderClick} value="Make order"/>
-                            </>) : null
-                    }
+                                        return (
+                                            <CartProduct key={_id}
+                                                         imageUrl={imageUrl}
+                                                         title={title}
+                                                         price={price}
+                                                         requestedQuantity={requestedQuantity}
+                                                         maxQuantity={maxQuantity}
+                                                         productId={_id}
+                                                         userId={context.user.id}
+                                                         handleUpdate={getProducts}
+                                                         handleClear={() => handleClear(_id)}/>
+                                        );
+                                    })}
+                            </Grid>
+                            <Grid>
+                                {
+                                    products.length > 0 ? (
+                                        <>
+                                            <strong>Total price: {totalPrice}</strong>
+                                            <ButtonComponent onClick={handleOrderClick} value="Make order"/>
+                                        </>) : null
+                                }
 
-                    <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
-                </Grid>
-            </Grid>
+                                <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
+                            </Grid>
+                        </Grid>
+                    </div>
+                )
+            }
         </PageLayout>
     )
 };
