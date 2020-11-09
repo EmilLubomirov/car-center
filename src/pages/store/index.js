@@ -17,7 +17,8 @@ const StorePage = () =>{
     const [pageCount, setPageCount] = useState(1);
     const [products, setProducts] = useState([]);
     const [tags, setTags] = useState([]);
-    const [selectedTags, setSelectedTags] = useState([]);
+    const [selectedTags, setSelectedTags] =
+        useState(JSON.parse(sessionStorage.getItem("tags")) || []);
     const [message, setMessage] = useState({
         isOpen: false,
         value: "",
@@ -103,6 +104,7 @@ const StorePage = () =>{
             getPageCount();
         }
 
+        sessionStorage.setItem("tags", JSON.stringify(selectedTags));
         history.push('/');
 
     }, [selectedTags, getPageCount, history]);
@@ -134,6 +136,7 @@ const StorePage = () =>{
                     <FormGroup>
                         {tags.map(t => {
                             return <CheckboxComponent key={t._id} value={t.name} color="primary"
+                                                      isChecked={selectedTags.includes(t.name)}
                                                       handleChange={handleChange}/>
                         })}
                     </FormGroup>
