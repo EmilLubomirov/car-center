@@ -12,3 +12,9 @@
     text-align: center;
     flex: 0 1 100%;
 }
+
+.loader{
+    position: relative;
+    left: 30%;
+    top: 90px;
+}

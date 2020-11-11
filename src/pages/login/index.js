@@ -6,6 +6,7 @@ import Input from "../../components/input";
 import ButtonComponent from "../../components/button";
 import AuthContext from "../../AuthContext";
 import {authenticate} from "../../utils/auth";
+import  {MESSAGES} from "../../utils/constants";
 import Notification from "../../components/notification";
 import Paper from "@material-ui/core/Paper";
 import styles from "./index.module.css";
@@ -14,6 +15,8 @@ const LoginPage = () =>{
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isUsernameEmpty, setUsernameEmpty] = useState(false);
+    const [isPasswordEmpty, setPasswordEmpty] = useState(false);
 
     const [message, setMessage] = useState({
         isOpen: false,
@@ -25,11 +28,21 @@ const LoginPage = () =>{
     const history = useHistory();
 
     const handleUsernameChange = (e) =>{
-        setUsername(e.target.value);
+
+        const { value } = e.target;
+        setUsername(value);
+
+        const isUsernameEmpty = value.trim() === '';
+        setUsernameEmpty(isUsernameEmpty);
     };
 
     const handlePasswordChange = (e) =>{
-        setPassword(e.target.value);
+
+        const { value } = e.target;
+        setPassword(value);
+
+        const isPasswordEmpty = value.trim() === '';
+        setPasswordEmpty(isPasswordEmpty);
     };
 
     const handleMessageClose = () =>{
@@ -42,6 +55,16 @@ const LoginPage = () =>{
     const handleSubmit = (e) =>{
 
         e.preventDefault();
+
+        const isUsernameEmpty = username.trim() === '';
+        const isPasswordEmpty = password.trim() === '';
+
+        setUsernameEmpty(isUsernameEmpty);
+        setPasswordEmpty(isPasswordEmpty);
+
+        if (isUsernameEmpty || isPasswordEmpty){
+            return;
+        }
 
         const url = "http://localhost:9999/api/user/login";
         const headers =  { 'Content-Type': 'application/json' };
@@ -62,7 +85,7 @@ const LoginPage = () =>{
             });
 
             history.push('/', {
-                message: "Successfully logged in",
+                message: MESSAGES.successfulLogin,
                 type: "success"
             });
         }, (e) => {
@@ -70,7 +93,7 @@ const LoginPage = () =>{
 
             setMessage({
                 isOpen: true,
-                value: "Login failed! Try again!",
+                value: MESSAGES.userNotFound,
                 type: "error"
             });
         })
@@ -85,9 +108,16 @@ const LoginPage = () =>{
                     </div>
                     <form className={styles.form}>
                         <Input label="Username" type="text" id="username" value={username}
-                               onChange={handleUsernameChange}/>
+                               onChange={handleUsernameChange}
+                               required={true}
+                               helperText={isUsernameEmpty ? "Username should not be empty" : ""}
+                               error={isUsernameEmpty}/>
+
                         <Input label="Password" type="password" id="password" value={password}
-                               onChange={handlePasswordChange}/>
+                               onChange={handlePasswordChange}
+                               required={true}
+                               helperText={isPasswordEmpty ? "Password should not be empty" : ""}
+                               error={isPasswordEmpty}/>
 
                         <ButtonComponent value="Login"
                                          onClick={handleSubmit}/>

@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    max-width: 55%;
+    margin: 30px auto;
+    padding: 40px 0;
+}
+
+.form {
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 30px;
+}
+
+.tag{
+    margin: 25px 0;
+    max-width: 50%;
+}
+
+.button{
+    align-self: center;
+}

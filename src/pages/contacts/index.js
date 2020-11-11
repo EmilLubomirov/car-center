@@ -1,11 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
 import MapComponent from "../../components/map";
 import Paper from "@material-ui/core/Paper";
 import styles from "./index.module.css"
+import LoadingBar from "../../components/loading-bar";
 
 const ContactsPage = () =>{
+
+    const [isLoading, setLoading] = useState(true);
 
     const mapUrl = (
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2933.348163315956!2d23." +
@@ -22,7 +25,15 @@ const ContactsPage = () =>{
                    <Heading type="h4" value="Contacts"/>
                </div>
 
-               <MapComponent url={mapUrl}/>
+               {
+                   isLoading ? (
+                       <div className={styles.loader}>
+                           <LoadingBar type="spin" color="black" width="50px" height="50px"/>
+                       </div>
+                   ) : null
+               }
+
+               <MapComponent setLoading={setLoading} url={mapUrl}/>
 
                <div>
                    <p>

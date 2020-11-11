@@ -1,6 +1,6 @@
 import React from "react";
 
-const MapComponent = ({url}) =>{
+const MapComponent = ({url, setLoading}) =>{
 
     return (
         <div>
@@ -10,7 +10,8 @@ const MapComponent = ({url}) =>{
                     // style="border:0;"
                     allowFullScreen=""
                     aria-hidden="false"
-                    tabIndex="0">
+                    tabIndex="0"
+                    onLoad={() => setLoading(false)}>
             </iframe>
         </div>
     )

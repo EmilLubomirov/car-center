@@ -3,11 +3,13 @@ import {useHistory} from "react-router-dom";
 import Heading from "../../components/heading";
 import Input from "../../components/input";
 import PageLayout from "../../components/page-layout";
-import styles from "./index.module.css";
 import {MenuItem, TextField} from "@material-ui/core";
 import ButtonComponent from "../../components/button";
 import Notification from "../../components/notification";
 import AuthContext from "../../AuthContext";
+import Paper from "@material-ui/core/Paper";
+import {MESSAGES} from "../../utils/constants";
+import styles from "./index.module.css";
 
 const ServicesPage = () =>{
 
@@ -67,7 +69,7 @@ const ServicesPage = () =>{
         if (!user){
             setMessage({
                 isOpen: true,
-                value: "You should be logged in first!",
+                value: MESSAGES.userShouldBeLoggedIn,
                 type: "error"
             });
 
@@ -99,7 +101,7 @@ const ServicesPage = () =>{
             else{
                 setMessage({
                     isOpen: true,
-                    value: "Either data is invalid or date is busy! Try again!",
+                    value: MESSAGES.serviceAppointmentFailure,
                     type: "error"
                 });
             }
@@ -121,35 +123,42 @@ const ServicesPage = () =>{
 
     return (
         <PageLayout>
-            <div className={styles.wrapper}>
-                <Heading type="h4" value="Do not waste your time! Make an appointment now!"/>
-                <form>
-                    <Input label="First name" type="text" id="firstName" value={firstName}
-                           onChange={handleFirstNameChange}/>
-                    <Input label="Surname" type="text" id="surname" value={surname}
-                           onChange={handleSurnameChange}/>
-                    <Input label="Phone number" type="tel" id="phoneNumber" value={phoneNumber}
-                           onChange={handlePhoneNumberChange}/>
-                    <Input label="Car license plate" type="text" id="carLicencePlate" value={carLicensePlate}
-                           onChange={handleCarLicensePlateChange}/>
-                    <Input type="datetime-local" id="time" value={date}
-                           onChange={handleDateChange}/>
-                    <TextField id="select" label="Tag" value={tag} select onChange={handleTagChange}>
-                        {serviceTags.map((t) =>{
-                            return <MenuItem key={t._id} value={t.name}>{t.name}</MenuItem>
-                        })}
-                    </TextField>
+            <Paper className={styles.container}>
+                <div className={styles.wrapper}>
+                    <Heading type="h4" value="Do not waste your time! Make an appointment now!"/>
+                    <p className={styles.note}>
+                        * NOTE: You should choose a weekday and time between 9 and 19 o'clock from the calendar below!
+                    </p>
+                    <form className={styles.form}>
+                        <Input label="First name" type="text" id="firstName" value={firstName}
+                               onChange={handleFirstNameChange}/>
+                        <Input label="Surname" type="text" id="surname" value={surname}
+                               onChange={handleSurnameChange}/>
+                        <Input label="Phone number" type="tel" id="phoneNumber" value={phoneNumber}
+                               onChange={handlePhoneNumberChange}/>
+                        <Input label="Car license plate" type="text" id="carLicencePlate" value={carLicensePlate}
+                               onChange={handleCarLicensePlateChange}/>
+                        <Input type="datetime-local" id="time" value={date}
+                               onChange={handleDateChange}/>
+                        <TextField className={styles.tag} id="select" label="Tag" value={tag} select onChange={handleTagChange}>
+                            {serviceTags.map((t) =>{
+                                return <MenuItem key={t._id} value={t.name}>{t.name}</MenuItem>
+                            })}
+                        </TextField>
 
-                    <ButtonComponent onClick={handleClick} value="Confirm"/>
+                        <div className={styles.button}>
+                            <ButtonComponent onClick={handleClick} value="Confirm"/>
+                        </div>
 
-                </form>
+                    </form>
 
-                <Notification type={message.type}
-                              message={message.value}
-                              isOpen={message.isOpen}
-                              duration={5000}
-                              onClose={handleMessageClose}/>
-            </div>
+                    <Notification type={message.type}
+                                  message={message.value}
+                                  isOpen={message.isOpen}
+                                  duration={5000}
+                                  onClose={handleMessageClose}/>
+                </div>
+            </Paper>
         </PageLayout>
     )
 };

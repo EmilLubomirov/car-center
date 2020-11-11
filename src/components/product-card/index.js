@@ -6,6 +6,7 @@ import LinkComponent from "../link";
 import ButtonComponent from "../button";
 import AuthContext from "../../AuthContext";
 import { addToCart } from "../../utils/cart";
+import {MESSAGES} from "../../utils/constants";
 
 const ProductCard = ({imageUrl, title, price, id, handleError}) =>{
 
@@ -16,7 +17,7 @@ const ProductCard = ({imageUrl, title, price, id, handleError}) =>{
         const { user } = context;
 
         if (!user){
-            handleError("You should be logged in first!");
+            handleError(MESSAGES.userShouldBeLoggedIn);
             return;
         }
 

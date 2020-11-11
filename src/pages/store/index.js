@@ -18,16 +18,21 @@ const StorePage = () =>{
     const [pageCount, setPageCount] = useState(1);
     const [products, setProducts] = useState([]);
     const [tags, setTags] = useState([]);
-    const [selectedTags, setSelectedTags] =
-        useState(JSON.parse(sessionStorage.getItem("tags")) || []);
-    const [message, setMessage] = useState({
-        isOpen: false,
-        value: "",
-        type: ""
-    });
-    const [isLoading, setLoading] = useState(true);
 
     const location = useLocation();
+    const { state } = location;
+
+    const [selectedTags, setSelectedTags] =
+        useState(JSON.parse(sessionStorage.getItem("tags")) || []);
+
+    const [message, setMessage] = useState({
+        isOpen: state ? !!location.state.message : false,
+        value: state ? location.state.message || "" : "",
+        type: state ? location.state.type || "" : ""
+    });
+
+    const [isLoading, setLoading] = useState(true);
+
     const history = useHistory();
 
     const getProducts = useCallback(async (skip, limit, selectedTags) =>{
@@ -174,6 +179,7 @@ const StorePage = () =>{
                                       message={message.value}
                                       isOpen={message.isOpen}
                                       duration={5000}
+                                      size="medium"
                                       onClose={handleMessageClose}/>
 
                         <div className={styles.pagination}>

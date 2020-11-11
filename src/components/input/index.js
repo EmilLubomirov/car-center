@@ -2,7 +2,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 
 const Input = ({ id, label, type, value, onChange, name,
-                   required, isTextArea, min, max, defaultValue}) =>{
+                   required, helperText, error, isTextArea, min, max, defaultValue}) =>{
 
     return (
         <div>
@@ -11,6 +11,8 @@ const Input = ({ id, label, type, value, onChange, name,
                 inputProps={{ min: `${min}`, max: `${max}`}}
                 multiline={isTextArea}
                 required={required}
+                error={error}
+                helperText={helperText}
                 id={id}
                 name={name}
                 label={label}

@@ -7,6 +7,7 @@ import Heading from "../../components/heading";
 import styles from "./index.module.css";
 import Paper from "@material-ui/core/Paper";
 import {addToCart} from "../../utils/cart";
+import {MESSAGES} from "../../utils/constants";
 import AuthContext from "../../AuthContext";
 import Notification from "../../components/notification";
 
@@ -37,7 +38,7 @@ const ProductDetailsPage = () =>{
         if (!user){
             setMessage({
                 isOpen: true,
-                value: "You should be logged in first!",
+                value: MESSAGES.userShouldBeLoggedIn,
                 type: "error"
             });
             return;

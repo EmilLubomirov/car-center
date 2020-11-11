@@ -1,6 +1,35 @@
+.container{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    max-width: 75%;
+    margin: 30px auto;
+    padding: 30px 0;
+}
+
 .wrapper{
     display: flex;
     flex-flow: column;
     align-items: center;
     margin: 50px auto;
+}
+
+.note{
+    color: red;
+    margin-top: 40px;
+}
+
+.form{
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 30px;
+}
+
+.tag{
+    margin: 20px 0;
+    width: 50%;
+}
+
+.button{
+    align-self: center;
 }
