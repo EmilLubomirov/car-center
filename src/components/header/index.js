@@ -7,7 +7,8 @@ import getNavigation from "../../utils/navigation";
 import Container from "@material-ui/core/Container";
 import AuthContext from "../../AuthContext";
 import ButtonComponent from "../button";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import  {MESSAGES, MESSAGE_TYPES} from "../../utils/constants";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const Header = () =>{
 
@@ -18,9 +19,14 @@ const Header = () =>{
 
     const handleLogout = () =>{
         context.logout();
+
+        sessionStorage.removeItem("tags");
         document.cookie = "x-auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-        history.push('/login');
+        history.push('/login', {
+            message: MESSAGES.successfulLogout,
+            type: MESSAGE_TYPES.success
+        });
     };
 
     return (
@@ -37,7 +43,7 @@ const Header = () =>{
                                     return <LinkComponent key={index}
                                                    path={navItem.path}
                                                    title={navItem.title}>
-                                        <AddShoppingCartIcon/>
+                                        <ShoppingCartIcon/>
                                     </LinkComponent>
                                 }
                                 return <LinkComponent key={index}

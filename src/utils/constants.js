@@ -20,7 +20,10 @@ const MESSAGES = {
     negativePrice: "Product price should be positive",
     successfulProductCreation: "Successfully add product",
     productCreationFailure: "Product creation failed!",
-    serviceAppointmentFailure: "Either data is invalid or empty or date is busy!"
+    serviceAppointmentFailure: "Either data is invalid or empty or date is busy!",
+    successfulLogout: "Successfully logged out",
+    orderFailure: "Unable to make an order",
+    successfulOrder: "Thank you for buying from us"
 };
 
 const MESSAGE_TYPES = {

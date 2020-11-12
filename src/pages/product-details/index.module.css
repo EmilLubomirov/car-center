@@ -5,6 +5,7 @@
     padding: 30px 0;
     max-width: 50%;
     margin: 40px auto;
+    min-height: 70vh;
 }
 
 .description{
@@ -12,6 +13,5 @@
 }
 
 .image{
-    max-width: 100%;
-    height: auto;
+    margin-bottom: 25px;
 }

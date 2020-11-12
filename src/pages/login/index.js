@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import {useHistory} from  "react-router-dom";
+import {useHistory, useLocation} from  "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
 import Input from "../../components/input";
@@ -18,10 +18,13 @@ const LoginPage = () =>{
     const [isUsernameEmpty, setUsernameEmpty] = useState(false);
     const [isPasswordEmpty, setPasswordEmpty] = useState(false);
 
+    const location = useLocation();
+    const { state } = location;
+
     const [message, setMessage] = useState({
-        isOpen: false,
-        value: "",
-        type: ""
+        isOpen: state ? !!state.message : false,
+        value: state ? state.message || "" : "",
+        type: state ? state.type || "" : ""
     });
 
     const context = useContext(AuthContext);

@@ -10,7 +10,7 @@ import {CloudinaryContext} from "cloudinary-react"
 import Notification from "../../components/notification";
 import {getProductTags} from "../../utils/product-tag";
 import Paper from "@material-ui/core/Paper";
-import  {MESSAGES, MESSAGE_TYPES} from "../../utils/constants";
+import  {MESSAGES} from "../../utils/constants";
 import styles from "./index.module.css";
 
 const AddProductPage = () =>{
@@ -61,6 +61,8 @@ const AddProductPage = () =>{
     const handleSubmit = (e) =>{
 
         e.preventDefault();
+
+        console.log(tag);
 
         fetch("http://localhost:9999/api/product/create", {
             method: "POST",

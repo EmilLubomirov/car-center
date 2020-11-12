@@ -1,9 +1,11 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import styles from "./index.module.css";
 
 function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />
+    return <MuiAlert className={styles.notification} elevation={6} variant="filled" {...props} />
+
 }
 
 const Notification = ({isOpen, duration, type, message, size, onClose}) => {

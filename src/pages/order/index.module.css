@@ -1,6 +1,28 @@
+.container{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    max-width: 55%;
+    max-height: 130vh;
+    margin: 40px auto;
+}
+
 .wrapper{
     display: flex;
     flex-flow: column;
     align-items: center;
     margin: 85px auto;
+}
+
+.form {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.price{
+    font-size: larger;
+    font-weight: bold;
+    margin: 30px;
 }

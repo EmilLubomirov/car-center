@@ -14,6 +14,7 @@ import Notification from "../../components/notification";
 const ProductDetailsPage = () =>{
 
     const [product, setProduct] = useState({});
+    const [isLoading, setLoading] = useState(true);
     const [message, setMessage] = useState({
         isOpen: false,
         value: "",
@@ -28,7 +29,7 @@ const ProductDetailsPage = () =>{
         const product = await promise.json();
 
        setProduct(product);
-
+       setLoading(false);
     }, [id]);
 
     const handleClick = async () =>{
@@ -74,9 +75,13 @@ const ProductDetailsPage = () =>{
                 <p className={styles.description}>{description}</p>
                 <p>Price: {price} lv.</p>
 
-                <ButtonComponent onClick={handleClick} value="Add to cart">
-                    <AddShoppingCartIcon/>
-                </ButtonComponent>
+                {
+                    isLoading ? null : (
+                        <ButtonComponent onClick={handleClick} value="Add to cart">
+                            <AddShoppingCartIcon/>
+                        </ButtonComponent>
+                    )
+                }
             </Paper>
 
             <Notification type={message.type}

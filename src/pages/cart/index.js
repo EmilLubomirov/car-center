@@ -1,6 +1,5 @@
-import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
-import {useHistory} from "react-router-dom"
-import AuthContext from "../../AuthContext";
+import React, {useCallback, useEffect, useRef, useState} from "react";
+import {useHistory, useParams} from "react-router-dom"
 import PageLayout from "../../components/page-layout";
 import CartProduct from "../../components/cart-product";
 import Heading from "../../components/heading";
@@ -16,14 +15,14 @@ const CartPage = () =>{
     const [totalPrice, setTotalPrice] = useState('');
     const [isLoading, setLoading] = useState(true);
 
-    const context = useContext(AuthContext);
+    const params = useParams();
     const history = useHistory();
 
     let isCancelled = useRef(false);
 
     const getProducts = useCallback(async () =>{
 
-        const userId = context.user.id;
+        const userId = params.userId;
 
         const url = `http://localhost:9999/api/cart/?user=${userId}`;
         const promise = await fetch(url);
@@ -34,11 +33,11 @@ const CartPage = () =>{
         if (!isCancelled.current){
             setProducts(cartProducts);
         }
-    },[context.user.id, isCancelled]);
+    }, [isCancelled, params.userId]);
 
     const handleClear = useCallback(async (productId) =>{
 
-        const userId = context.user.id;
+        const { userId } = params;
 
         const url = `http://localhost:9999/api/cart/remove-from-cart`;
         const headers =  { 'Content-Type': 'application/json' };
@@ -57,14 +56,14 @@ const CartPage = () =>{
         const result = await promise.json();
 
         setProducts(result.products);
-    }, [context.user.id]);
+    }, [params]);
 
     const handleShoppingClick = () =>{
         history.push('/');
     };
 
     const handleOrderClick = () =>{
-        history.push(`/order/${context.user.id}`, {
+        history.push(`/order/${params.userId}`, {
             products,
             totalPrice
         });
@@ -126,7 +125,7 @@ const CartPage = () =>{
                                                          requestedQuantity={requestedQuantity}
                                                          maxQuantity={maxQuantity}
                                                          productId={_id}
-                                                         userId={context.user.id}
+                                                         userId={params.userId}
                                                          handleUpdate={getProducts}
                                                          handleClear={() => handleClear(_id)}/>
                                         );

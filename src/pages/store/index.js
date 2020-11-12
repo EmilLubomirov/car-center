@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useLocation, useHistory} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
@@ -18,22 +18,23 @@ const StorePage = () =>{
     const [pageCount, setPageCount] = useState(1);
     const [products, setProducts] = useState([]);
     const [tags, setTags] = useState([]);
+    const [selectedTags, setSelectedTags] =
+        useState(JSON.parse(sessionStorage.getItem("tags")) || []);
 
     const location = useLocation();
     const { state } = location;
 
-    const [selectedTags, setSelectedTags] =
-        useState(JSON.parse(sessionStorage.getItem("tags")) || []);
 
     const [message, setMessage] = useState({
-        isOpen: state ? !!location.state.message : false,
-        value: state ? location.state.message || "" : "",
-        type: state ? location.state.type || "" : ""
+        isOpen: state ? !!state.message : false,
+        value: state ? state.message || "" : "",
+        type: state ? state.type || "" : ""
     });
 
     const [isLoading, setLoading] = useState(true);
 
     const history = useHistory();
+    let isCancelled = useRef(false);
 
     const getProducts = useCallback(async (skip, limit, selectedTags) =>{
 
@@ -54,13 +55,15 @@ const StorePage = () =>{
 
         let result = await promise.json();
 
-        if (selectedTags.length > 0){
-            const actualPageCount = Math.ceil(result.length / PRODUCT.MAX_PRODUCTS_BY_PAGE);
-            setPageCount(actualPageCount);
-            result = result.slice(skip, skip + limit);
-        }
+        if (!isCancelled.current){
+            if (selectedTags.length > 0){
+                const actualPageCount = Math.ceil(result.length / PRODUCT.MAX_PRODUCTS_BY_PAGE);
+                setPageCount(actualPageCount);
+                result = result.slice(skip, skip + limit);
+            }
 
-        setProducts(result);
+            setProducts(result);
+        }
     }, []);
 
     const getPageCount = useCallback(async () =>{
@@ -69,7 +72,10 @@ const StorePage = () =>{
         const result = await promise.json();
 
         const actualPageCount = Math.ceil(result.count / PRODUCT.MAX_PRODUCTS_BY_PAGE);
-        setPageCount(actualPageCount);
+
+        if (!isCancelled.current){
+            setPageCount(actualPageCount);
+        }
     }, []);
 
     const handleError = (message) =>{
@@ -107,19 +113,23 @@ const StorePage = () =>{
     }, [getPageCount]);
 
     useEffect(() => {
-        if (selectedTags.length === 0){
+        if (selectedTags.length === 0 ||
+            selectedTags.length === tags.length){
             getPageCount();
         }
 
         sessionStorage.setItem("tags", JSON.stringify(selectedTags));
         history.push('/');
 
-    }, [selectedTags, getPageCount, history]);
+    }, [selectedTags, getPageCount, history, tags.length]);
 
     useEffect(() => {
         getProductTags().then(tags => {
-            setTags(tags);
-            setLoading(false);
+
+            if (!isCancelled.current){
+                setTags(tags);
+                setLoading(false);
+            }
         });
     }, []);
 
@@ -131,6 +141,12 @@ const StorePage = () =>{
 
         getProducts(skip, limit, selectedTags);
     }, [getProducts, location.search, selectedTags]);
+
+    useEffect(() => {
+        return () => {
+            isCancelled.current = true;
+        }
+    }, []);
 
     return (
         <PageLayout>
