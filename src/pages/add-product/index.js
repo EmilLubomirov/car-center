@@ -10,7 +10,7 @@ import {CloudinaryContext} from "cloudinary-react"
 import Notification from "../../components/notification";
 import {getProductTags} from "../../utils/product-tag";
 import Paper from "@material-ui/core/Paper";
-import  {MESSAGES} from "../../utils/constants";
+import  {MESSAGES, MESSAGE_TYPES} from "../../utils/constants";
 import styles from "./index.module.css";
 
 const AddProductPage = () =>{
@@ -62,8 +62,6 @@ const AddProductPage = () =>{
 
         e.preventDefault();
 
-        console.log(tag);
-
         fetch("http://localhost:9999/api/product/create", {
             method: "POST",
             headers: {
@@ -82,7 +80,7 @@ const AddProductPage = () =>{
             if (response.status === 200){
                 history.push('/', {
                     message,
-                    type: "success"
+                    type: MESSAGE_TYPES.success
                 });
             }
 
@@ -90,7 +88,7 @@ const AddProductPage = () =>{
                 setMessage({
                     isOpen: true,
                     value: MESSAGES.productCreationFailure,
-                    type: "error"
+                    type: MESSAGE_TYPES.error
                 });
             }
         })

@@ -12,7 +12,9 @@ import styles from "./index.module.css";
 const CartPage = () =>{
 
     const [products, setProducts] = useState([]);
+    const [productsPrice, setProductsPrice] = useState('');
     const [totalPrice, setTotalPrice] = useState('');
+    const [delivery, setDelivery] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
     const params = useParams();
@@ -34,6 +36,17 @@ const CartPage = () =>{
             setProducts(cartProducts);
         }
     }, [isCancelled, params.userId]);
+
+    const getDelivery = useCallback(async (name) =>{
+
+        const url = `http://localhost:9999/api/delivery/?name=${name}`;
+        const promise = await fetch(url);
+        const result = await promise.json();
+
+        if (!isCancelled.current){
+            setDelivery(result);
+        }
+    }, [isCancelled]);
 
     const handleClear = useCallback(async (productId) =>{
 
@@ -65,7 +78,9 @@ const CartPage = () =>{
     const handleOrderClick = () =>{
         history.push(`/order/${params.userId}`, {
             products,
-            totalPrice
+            productsPrice,
+            totalPrice,
+            deliveryName: delivery.name
         });
     };
 
@@ -74,7 +89,7 @@ const CartPage = () =>{
         const price = products.map(p => p.product.price * p.quantity)
             .reduce((acc, curr) => acc + curr, 0);
 
-        setTotalPrice(price.toFixed(2));
+        setProductsPrice(price.toFixed(2));
     }, [products]);
 
     useEffect(() =>{
@@ -82,6 +97,32 @@ const CartPage = () =>{
             setLoading(false);
         });
     },[getProducts]);
+
+    useEffect(() => {
+
+        const productsPriceNum = parseFloat(productsPrice);
+
+        if (!isNaN(productsPriceNum) && productsPriceNum > 0){
+            if (productsPriceNum < 50){
+                getDelivery("Standard");
+            }
+
+            else {
+                getDelivery("Free");
+            }
+
+            setTotalPrice(productsPriceNum.toFixed(2));
+        }
+    }, [productsPrice, getDelivery]);
+
+    useEffect(() => {
+
+        if (delivery){
+            const endPrice = Number(productsPrice) + delivery.price;
+            setTotalPrice(endPrice.toFixed(2));
+        }
+
+    }, [delivery, productsPrice]);
 
     useEffect(() => {
         return () => {
@@ -97,8 +138,8 @@ const CartPage = () =>{
                         <LoadingBar type="spin" color="black" width="8%" height="8%"/>
                     </div> ) :(
                     <div>
-                        <Grid container>
-                            <Grid item xs={9}>
+                        <Grid className={styles.items} container>
+                            <Grid item xs={8}>
                                 {products.length === 0 ? (<Heading type="h3" value="The cart is empty"/>) :
                                     products.map(p =>{
                                         const {
@@ -132,15 +173,29 @@ const CartPage = () =>{
                                     })}
                             </Grid>
                             <Grid>
-                                {
-                                    products.length > 0 ? (
-                                        <>
-                                            <strong>Total price: {totalPrice}</strong>
-                                            <ButtonComponent onClick={handleOrderClick} value="Make order"/>
-                                        </>) : null
-                                }
+                                <div>
+                                    {
+                                        products.length > 0 ? (
+                                            <div className={styles["price-section"]}>
+                                                <div>
+                                                    <strong>Products price: {productsPrice}</strong>
+                                                </div>
+                                                <div>
+                                                    <strong>
+                                                        Total price: {totalPrice}
+                                                        <small>&#160;(*delivery included)</small>
+                                                    </strong>
+                                                </div>
+                                                <div className={styles["order-button"]}>
+                                                    <ButtonComponent onClick={handleOrderClick} value="Make order"/>
+                                                </div>
+                                            </div>) : null
+                                    }
 
-                                <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
+                                    <div className={styles["shopping-button"]}>
+                                        <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
+                                    </div>
+                                </div>
                             </Grid>
                         </Grid>
                     </div>

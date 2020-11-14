@@ -2,3 +2,25 @@
     margin-top: 15%;
     margin-left: 47%;
 }
+
+.items {
+    margin: 20px 5px;
+}
+
+.price-section{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    margin: 40px 20px 10px 20px;
+    height: 110px;
+    font-size: 20px;
+}
+
+.order-button{
+    align-self: center;
+}
+
+.shopping-button{
+    margin: 0 auto;
+    max-width: fit-content;
+}

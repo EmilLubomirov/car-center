@@ -55,7 +55,7 @@ const OrderPage = () =>{
     };
 
     const handleSubmit = async () =>{
-        const { products } = location.state;
+        const { products, productsPrice, deliveryName } = location.state;
 
         const userId = params.userId;
 
@@ -85,7 +85,9 @@ const OrderPage = () =>{
             email,
             phoneNumber,
             address,
-            totalPrice
+            productsPrice,
+            totalPrice,
+            deliveryName
         });
 
         const response = await fetch(url, {

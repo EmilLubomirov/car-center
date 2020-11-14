@@ -26,7 +26,8 @@ const AboutPage = () =>{
 
                     Now we give our customers the opportunity to make an appointment through our site. No more waste of time!
                     Car Center also helps you to maintain your car as it provides wide range of products most needed.
-                    Go to our store page and make an order.
+                    Delivery price is fixed to 5 lv. and if your purchase is greater than 50 lv. it is FREE.
+                    Go to our store page and make an order now!
                 </div>
             </Paper>
         </PageLayout>
