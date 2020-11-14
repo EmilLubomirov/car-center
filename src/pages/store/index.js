@@ -119,7 +119,7 @@ const StorePage = () =>{
         }
 
         sessionStorage.setItem("tags", JSON.stringify(selectedTags));
-        history.push('/');
+        // history.push('/');
 
     }, [selectedTags, getPageCount, history, tags.length]);
 

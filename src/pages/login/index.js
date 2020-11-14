@@ -6,7 +6,7 @@ import Input from "../../components/input";
 import ButtonComponent from "../../components/button";
 import AuthContext from "../../AuthContext";
 import {authenticate} from "../../utils/auth";
-import  {MESSAGES} from "../../utils/constants";
+import {MESSAGE_TYPES, MESSAGES} from "../../utils/constants";
 import Notification from "../../components/notification";
 import Paper from "@material-ui/core/Paper";
 import styles from "./index.module.css";
@@ -89,7 +89,7 @@ const LoginPage = () =>{
 
             history.push('/', {
                 message: MESSAGES.successfulLogin,
-                type: "success"
+                type: MESSAGE_TYPES.success
             });
         }, (e) => {
             console.error(e);

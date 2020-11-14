@@ -11,21 +11,38 @@ import ServicesPage from "./pages/services";
 import AboutPage from "./pages/about";
 import ContactsPage from "./pages/contacts";
 import ErrorPage from "./pages/error";
+import AuthContext from "./AuthContext";
 
 const Navigation = () =>{
+
+    const context = useContext(AuthContext);
+    const isLoggedIn = !!context.user;
 
     return (
         <Switch>
             <Route path="/" exact component={StorePage}/>
-            <Route path="/register" component={RegisterPage}/>
-            <Route path="/login" component={LoginPage}/>
-            <Route path="/add-product" component={AddProductPage}/>
-            <Route path="/product/:id" component={ProductDetailsPage}/>
-            <Route path="/cart/:userId" component={CartPage}/>
-            <Route path="/order/:userId" component={OrderPage}/>
+
+            <Route path="/register">
+                {!isLoggedIn ? (<RegisterPage/>) : (<Redirect to="/"/>)}
+            </Route>
+            <Route path="/login">
+                {!isLoggedIn ? (<LoginPage/>) : (<Redirect to="/"/>)}
+            </Route>
+            <Route path="/add-product">
+                {isLoggedIn ? (<AddProductPage/>) : (<Redirect to="/login"/>)}
+            </Route>
+            <Route path="/cart/:userId">
+                {isLoggedIn ? (<CartPage/>) : (<Redirect to="/login"/>)}
+            </Route>
+            <Route path="/order/:userId">
+                {isLoggedIn ? (<OrderPage/>) : (<Redirect to="/login"/>)}
+            </Route>
+
             <Route path="/services" component={ServicesPage}/>
             <Route path="/about" component={AboutPage}/>
             <Route path="/contacts" component={ContactsPage}/>
+            <Route path="/product/:id" component={ProductDetailsPage}/>
+
             <Route component={ErrorPage}/>
         </Switch>
     )
