@@ -35,7 +35,7 @@ const ContactsPage = () =>{
 
                <MapComponent setLoading={setLoading} url={mapUrl}/>
 
-               <div>
+               <div className={styles.info}>
                    <p>
                        Phone: +359 876 312 313
                    </p>

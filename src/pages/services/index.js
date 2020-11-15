@@ -8,12 +8,10 @@ import ButtonComponent from "../../components/button";
 import Notification from "../../components/notification";
 import AuthContext from "../../AuthContext";
 import Paper from "@material-ui/core/Paper";
-import {MESSAGES} from "../../utils/constants";
+import {MESSAGES, MESSAGE_TYPES} from "../../utils/constants";
 import styles from "./index.module.css";
 
 const ServicesPage = () =>{
-
-    const context = useContext(AuthContext);
 
     const [serviceTags, setServiceTags] = useState([]);
     const [tag, setTag] = useState('');
@@ -29,6 +27,7 @@ const ServicesPage = () =>{
         type: ""
     });
 
+    const context = useContext(AuthContext);
     const history = useHistory();
 
     const handleFirstNameChange = (e) =>{
@@ -70,7 +69,20 @@ const ServicesPage = () =>{
             setMessage({
                 isOpen: true,
                 value: MESSAGES.userShouldBeLoggedIn,
-                type: "error"
+                type: MESSAGE_TYPES.error
+            });
+
+            return;
+        }
+
+        if (firstName.trim() === '' || surname.trim() === '' ||
+            date.trim() === '' || phoneNumber.trim() === '' ||
+            carLicensePlate.trim() === '' || tag.trim() === ''){
+
+            setMessage({
+                isOpen: true,
+                value: MESSAGES.inputFieldsEmpty,
+                type: MESSAGE_TYPES.error
             });
 
             return;
@@ -92,19 +104,30 @@ const ServicesPage = () =>{
             method: "POST",
             headers,
             body
-        }).then(response => {
+        }).then((response) => {
 
             if (response.status === 200) {
-                history.push('/');
+                history.push('/', {
+                    message: MESSAGES.successfulService,
+                    type: MESSAGE_TYPES.success
+                });
+
+                return;
             }
 
-            else{
+            response.json().then(result  => {
                 setMessage({
                     isOpen: true,
-                    value: MESSAGES.serviceAppointmentFailure,
-                    type: "error"
+                    value: result.message,
+                    type: MESSAGE_TYPES.error
                 });
-            }
+            }).catch(err => {
+                setMessage({
+                    isOpen: true,
+                    value: "Invalid data provided",
+                    type: MESSAGE_TYPES.error
+                });
+            });
         })
     };
 

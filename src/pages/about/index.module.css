@@ -11,7 +11,7 @@
     display: block;
     max-height: unset;
     max-width: 60%;
-    min-height: 35vh;
+    /*min-height: 35vh;*/
     margin: 0 auto;
     border-radius: 4px;
 }
@@ -22,7 +22,7 @@
     line-height: 1.7;
 }
 
-.company{
+.important{
     font-size: 20px;
     font-weight: bold;
 }

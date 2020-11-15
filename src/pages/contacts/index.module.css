@@ -13,6 +13,10 @@
     flex: 0 1 100%;
 }
 
+.info{
+    font-weight: 500;
+}
+
 .loader{
     position: relative;
     left: 30%;

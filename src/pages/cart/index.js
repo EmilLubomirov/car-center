@@ -140,7 +140,11 @@ const CartPage = () =>{
                     <div>
                         <Grid className={styles.items} container>
                             <Grid item xs={8}>
-                                {products.length === 0 ? (<Heading type="h3" value="The cart is empty"/>) :
+                                {products.length === 0 ? (
+                                    <div className={styles["empty-cart"]}>
+                                        <Heading type="h3" value="The cart is empty"/>
+                                        <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
+                                    </div>) :
                                     products.map(p =>{
                                         const {
                                             _id,
@@ -191,10 +195,12 @@ const CartPage = () =>{
                                                 </div>
                                             </div>) : null
                                     }
-
-                                    <div className={styles["shopping-button"]}>
-                                        <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
-                                    </div>
+                                    {
+                                        products.length > 0 ? (
+                                            <div className={styles["shopping-button"]}>
+                                                <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
+                                            </div>) : null
+                                    }
                                 </div>
                             </Grid>
                         </Grid>

@@ -6,8 +6,7 @@ const MapComponent = ({url, setLoading}) =>{
         <div>
             <iframe title="coordinates"
                     src={url}
-                    width="600" height="450" frameBorder="0"
-                    // style="border:0;"
+                    width="600" height="450" style={{maxWidth: "100%"}} frameBorder="0"
                     allowFullScreen=""
                     aria-hidden="false"
                     tabIndex="0"

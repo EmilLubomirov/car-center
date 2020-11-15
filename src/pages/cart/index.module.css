@@ -24,3 +24,7 @@
     margin: 0 auto;
     max-width: fit-content;
 }
+
+.empty-cart{
+    margin: 40px 0 0 40px;
+}

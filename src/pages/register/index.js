@@ -6,7 +6,7 @@ import Input from "../../components/input";
 import ButtonComponent from "../../components/button";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
-import  {MESSAGES} from "../../utils/constants";
+import  {MESSAGES, MESSAGE_TYPES} from "../../utils/constants";
 import styles from "./index.module.css";
 import Notification from "../../components/notification";
 
@@ -78,7 +78,7 @@ const RegisterPage = () =>{
             setMessage({
                 isOpen: true,
                 value: MESSAGES.passwordsNotMatch,
-                type: "error"
+                type: MESSAGE_TYPES.error
             });
 
             return;

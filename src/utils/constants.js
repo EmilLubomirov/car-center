@@ -15,15 +15,15 @@ const MESSAGES = {
     userNotFound: "No such user found",
     userShouldBeLoggedIn: "You should be logged in first",
     successfulLogin: "Successfully logged in",
-    inputFieldsEmpty: "Please, fill in all fields",
+    inputFieldsEmpty: "Some fields are empty",
     negativeOrZeroQuantity: "Quantity should be greater than 0",
     negativePrice: "Product price should be positive",
-    successfulProductCreation: "Successfully add product",
-    productCreationFailure: "Product creation failed!",
-    serviceAppointmentFailure: "Either data is invalid or empty or date is busy!",
+    successfulProductCreation: "Successfully added product",
+    productCreationFailure: "Product creation failed",
     successfulLogout: "Successfully logged out",
     orderFailure: "Unable to make an order",
-    successfulOrder: "Thank you for buying from us"
+    successfulOrder: "Thank you for buying from us",
+    successfulService: "Service appointment successfully made"
 };
 
 const MESSAGE_TYPES = {

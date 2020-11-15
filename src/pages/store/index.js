@@ -17,13 +17,13 @@ const StorePage = () =>{
 
     const [pageCount, setPageCount] = useState(1);
     const [products, setProducts] = useState([]);
+    const [productsEmpty, setProductsEmpty] = useState(false);
     const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTags] =
         useState(JSON.parse(sessionStorage.getItem("tags")) || []);
 
     const location = useLocation();
     const { state } = location;
-
 
     const [message, setMessage] = useState({
         isOpen: state ? !!state.message : false,
@@ -63,6 +63,7 @@ const StorePage = () =>{
             }
 
             setProducts(result);
+            setLoading(false);
         }
     }, []);
 
@@ -119,7 +120,7 @@ const StorePage = () =>{
         }
 
         sessionStorage.setItem("tags", JSON.stringify(selectedTags));
-        // history.push('/');
+        history.push('/');
 
     }, [selectedTags, getPageCount, history, tags.length]);
 
@@ -128,7 +129,6 @@ const StorePage = () =>{
 
             if (!isCancelled.current){
                 setTags(tags);
-                setLoading(false);
             }
         });
     }, []);
@@ -141,6 +141,12 @@ const StorePage = () =>{
 
         getProducts(skip, limit, selectedTags);
     }, [getProducts, location.search, selectedTags]);
+
+    useEffect(() => {
+        if (!isLoading){
+            setProductsEmpty(products.length === 0);
+        }
+    }, [isLoading, products.length]);
 
     useEffect(() => {
         return () => {
@@ -178,7 +184,8 @@ const StorePage = () =>{
                                         direction="row"
                                         alignItems="center"
                                         spacing={4}>
-                                    {products.map(product => {
+                                    {
+                                        products.map(product => {
                                         return (<Grid key={product._id} item xs={3}>
                                             <ProductCard imageUrl={product.imageUrl}
                                                          title={product.title}
@@ -186,7 +193,14 @@ const StorePage = () =>{
                                                          id={product._id}
                                                          handleError={handleError}/>
                                         </Grid>)
-                                    })}
+                                    })
+                                    }
+
+                                    {
+                                        productsEmpty ? (
+                                            <Heading type="h4" value="No products were found"/>
+                                        ) : null
+                                    }
                                 </Grid>
                             </div>
                         </div>

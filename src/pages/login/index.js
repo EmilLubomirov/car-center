@@ -81,15 +81,15 @@ const LoginPage = () =>{
 
             const {user, isAdmin} = await response.json();
 
+            history.push('/', {
+                message: MESSAGES.successfulLogin,
+                type: MESSAGE_TYPES.success
+            });
+
             context.login({
                 id: user._id,
                 username: user.username,
                 isAdmin
-            });
-
-            history.push('/', {
-                message: MESSAGES.successfulLogin,
-                type: MESSAGE_TYPES.success
             });
         }, (e) => {
             console.error(e);

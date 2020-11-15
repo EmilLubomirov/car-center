@@ -10,7 +10,7 @@
 }
 
 .loader{
-   margin-top: 15%;
+    margin-top: 15%;
     margin-left: 47%;
 }
 
@@ -29,4 +29,10 @@
 
 .products{
     flex: 0 1 80%;
+}
+
+@media only screen and (max-width: 600px) {
+    .products {
+        flex: 0 1 100%;
+    }
 }

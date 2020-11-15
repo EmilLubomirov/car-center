@@ -77,38 +77,56 @@ const OrderPage = () =>{
         const url = `http://localhost:9999/api/order/make-order`;
         const headers =  { 'Content-Type': 'application/json' };
 
-        const body = JSON.stringify({
-            userId,
-            products,
-            firstName,
-            surname,
-            email,
-            phoneNumber,
-            address,
-            productsPrice,
-            totalPrice,
-            deliveryName
-        });
-
-        const response = await fetch(url, {
-            method: "POST",
-            headers,
-            body
-        });
-
-        if (response.status > 201){
-            setMessage({
-                isOpen: true,
-                value: MESSAGES.orderFailure,
-                type: MESSAGE_TYPES.error
+        try {
+            const body = JSON.stringify({
+                userId,
+                products,
+                firstName,
+                surname,
+                email,
+                phoneNumber,
+                address,
+                productsPrice,
+                totalPrice,
+                deliveryName
             });
+
+            const response = await fetch(url, {
+                method: "POST",
+                headers,
+                body
+            });
+
+            if (response.status > 201){
+
+                try{
+                    const result = await response.json();
+
+                    setMessage({
+                        isOpen: true,
+                        value: result.message,
+                        type: MESSAGE_TYPES.error
+                    });
+                }
+                catch (e) {
+                    setMessage({
+                        isOpen: true,
+                        value: MESSAGES.orderFailure,
+                        type: MESSAGE_TYPES.error
+                    });
+                }
+            }
+
+            else {
+                history.push('/', {
+                    message: MESSAGES.successfulOrder,
+                    type: MESSAGE_TYPES.success
+                });
+            }
         }
 
-        else {
-            history.push('/', {
-                message: MESSAGES.successfulOrder,
-                type: MESSAGE_TYPES.success
-            });
+        catch (e) {
+            console.error(e);
         }
     };
 

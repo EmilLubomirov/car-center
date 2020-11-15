@@ -29,7 +29,6 @@ const ProductDetailsPage = () =>{
         const product = await promise.json();
 
        setProduct(product);
-       setLoading(false);
     }, [id]);
 
     const handleClick = async () =>{
@@ -69,17 +68,19 @@ const ProductDetailsPage = () =>{
     return(
         <PageLayout>
             <Paper className={styles.wrapper}>
-                <img className={styles.image} src={imageUrl} alt={title}/>
-
-                <Heading type="h4" value={title}/>
-                <p className={styles.description}>{description}</p>
-                <p>Price: {price} lv.</p>
+                <img className={styles.image} src={imageUrl}
+                     onLoad={() => setLoading(false)} alt={title}/>
 
                 {
                     isLoading ? null : (
-                        <ButtonComponent onClick={handleClick} value="Add to cart">
-                            <AddShoppingCartIcon/>
-                        </ButtonComponent>
+                        <>
+                            <Heading type="h4" value={title}/>
+                            <p className={styles.description}>{description}</p>
+                            <p>Price: {price} lv.</p>
+                            <ButtonComponent onClick={handleClick} value="Add to cart">
+                                <AddShoppingCartIcon/>
+                            </ButtonComponent>
+                        </>
                     )
                 }
             </Paper>
