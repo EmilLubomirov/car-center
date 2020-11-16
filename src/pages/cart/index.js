@@ -139,7 +139,7 @@ const CartPage = () =>{
                     </div> ) :(
                     <div>
                         <Grid className={styles.items} container>
-                            <Grid item xs={8}>
+                            <Grid item xs={12} sm={8}>
                                 {products.length === 0 ? (
                                     <div className={styles["empty-cart"]}>
                                         <Heading type="h3" value="The cart is empty"/>

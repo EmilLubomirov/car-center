@@ -14,6 +14,16 @@
     text-decoration: underline;
 }
 
+.image{
+    height: 140px;
+}
+
 .clearIcon:hover{
     cursor: pointer;
+}
+
+@media only screen and (max-width: 500px) {
+    .image {
+        height: 70px;
+    }
 }

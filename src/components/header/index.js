@@ -33,7 +33,7 @@ const Header = () =>{
         <AppBar position="static">
             <Container>
                 <Toolbar>
-                    <img src="/car-logo.png" alt="logo"/>
+                    <img className={styles.logo} src="/car-logo.png" alt="logo"/>
                     <div className={styles.wrapper}>
                         {
                             navigation.map((navItem, index) => {

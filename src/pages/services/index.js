@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {useHistory} from "react-router-dom";
 import Heading from "../../components/heading";
 import Input from "../../components/input";
@@ -29,6 +29,7 @@ const ServicesPage = () =>{
 
     const context = useContext(AuthContext);
     const history = useHistory();
+    const isCancelled = useRef(false);
 
     const handleFirstNameChange = (e) =>{
       setFirstName(e.target.value);
@@ -137,12 +138,21 @@ const ServicesPage = () =>{
 
         const promise = await fetch(url);
         const serviceTags = await promise.json();
-        setServiceTags([...serviceTags]);
+
+        if (!isCancelled.current){
+            setServiceTags([...serviceTags]);
+        }
     }, []);
 
     useEffect(() =>{
         getServiceTags();
     }, [getServiceTags]);
+
+    useEffect(() => {
+        return () => {
+            isCancelled.current = true;
+        }
+    }, []);
 
     return (
         <PageLayout>

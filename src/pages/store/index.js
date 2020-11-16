@@ -186,7 +186,7 @@ const StorePage = () =>{
                                         spacing={4}>
                                     {
                                         products.map(product => {
-                                        return (<Grid key={product._id} item xs={3}>
+                                        return (<Grid key={product._id} item xs={6} sm={3}>
                                             <ProductCard imageUrl={product.imageUrl}
                                                          title={product.title}
                                                          price={product.price}

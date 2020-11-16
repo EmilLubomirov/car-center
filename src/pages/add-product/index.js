@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
@@ -12,6 +12,7 @@ import {getProductTags} from "../../utils/product-tag";
 import Paper from "@material-ui/core/Paper";
 import  {MESSAGES, MESSAGE_TYPES} from "../../utils/constants";
 import styles from "./index.module.css";
+import AuthContext from "../../AuthContext";
 
 const AddProductPage = () =>{
 
@@ -30,6 +31,7 @@ const AddProductPage = () =>{
     });
 
     const history = useHistory();
+    const context = useContext(AuthContext);
 
     const handleTitleChange = (e) =>{
         setTitle(e.target.value);
@@ -73,13 +75,14 @@ const AddProductPage = () =>{
                 quantity,
                 price,
                 tag,
-                imageUrl
+                imageUrl,
+                userId: context.user.id
             })
         }).then(response => {
 
             if (response.status === 200){
                 history.push('/', {
-                    message,
+                    message: MESSAGES.successfulProductCreation,
                     type: MESSAGE_TYPES.success
                 });
             }
@@ -124,41 +127,39 @@ const AddProductPage = () =>{
     return (
         <PageLayout>
             <Paper className={styles.container}>
-                <div className={styles.wrapper}>
-                    <Heading type="h4" value="Add Product"/>
+                <Heading type="h4" value="Add Product"/>
 
-                    <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
-                        <form className={styles.form}>
-                            <Input label="Title" type="text" id="title" value={title}
-                                   onChange={handleTitleChange}/>
-                            <Input label="Description" type="text" isTextArea={true} id="description" value={description}
-                                   onChange={handleDescriptionChange}/>
-                            <Input label="Quantity" type="number" id="quantity" value={quantity}
-                                   onChange={handleQuantityChange}/>
-                            <Input label="Price (lv.)" type="number" id="price" value={price}
-                                   onChange={handlePriceChange}/>
+                <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
+                    <form className={styles.form}>
+                        <Input label="Title" type="text" id="title" value={title}
+                               onChange={handleTitleChange}/>
+                        <Input label="Description" type="text" isTextArea={true} id="description" value={description}
+                               onChange={handleDescriptionChange}/>
+                        <Input label="Quantity" type="number" id="quantity" value={quantity}
+                               onChange={handleQuantityChange}/>
+                        <Input label="Price (lv.)" type="number" id="price" value={price}
+                               onChange={handlePriceChange}/>
 
-                            <ButtonComponent color="default" value="Upload" onClick={() => beginUpload(tag)}/>
+                        <ButtonComponent color="default" value="Upload" onClick={() => beginUpload(tag)}/>
 
-                            <TextField className={styles.tag} id="select" label="Tag" value={tag} select onChange={handleTagChange}>
-                                {tags.map((t) =>{
-                                    return <MenuItem key={t._id} value={t.name}>{t.name}</MenuItem>
-                                })}
-                            </TextField>
+                        <TextField className={styles.tag} id="select" label="Tag" value={tag} select onChange={handleTagChange}>
+                            {tags.map((t) =>{
+                                return <MenuItem key={t._id} value={t.name}>{t.name}</MenuItem>
+                            })}
+                        </TextField>
 
-                            <div className={styles.button}>
-                                <ButtonComponent value="Save"
-                                                 onClick={handleSubmit}/>
-                            </div>
-                        </form>
-                    </CloudinaryContext>
+                        <div className={styles.button}>
+                            <ButtonComponent value="Save"
+                                             onClick={handleSubmit}/>
+                        </div>
+                    </form>
+                </CloudinaryContext>
 
-                    <Notification type={message.type}
-                                  message={message.value}
-                                  isOpen={message.isOpen}
-                                  duration={5000}
-                                  onClose={handleMessageClose}/>
-                </div>
+                <Notification type={message.type}
+                              message={message.value}
+                              isOpen={message.isOpen}
+                              duration={5000}
+                              onClose={handleMessageClose}/>
             </Paper>
         </PageLayout>
     )

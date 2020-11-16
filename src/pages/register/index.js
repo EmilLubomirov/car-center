@@ -103,7 +103,7 @@ const RegisterPage = () =>{
                 setMessage({
                     isOpen: true,
                     value: MESSAGES.userAlreadyExists,
-                    type: "error"
+                    type: MESSAGE_TYPES.error
                 });
             }
         })

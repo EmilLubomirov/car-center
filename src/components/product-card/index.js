@@ -7,6 +7,7 @@ import ButtonComponent from "../button";
 import AuthContext from "../../AuthContext";
 import { addToCart } from "../../utils/cart";
 import {MESSAGES} from "../../utils/constants";
+import styles from "./index.module.css";
 
 const ProductCard = ({imageUrl, title, price, id, handleError}) =>{
 
@@ -30,6 +31,7 @@ const ProductCard = ({imageUrl, title, price, id, handleError}) =>{
                 <LinkComponent path={`/product/${id}`}>
                     <CardActionArea>
                         <CardMedia
+                            className={styles.img}
                             component="img"
                             alt={title}
                             image={imageUrl}

@@ -2,9 +2,9 @@ import React, {useCallback, useEffect, useState} from "react";
 import Paper from "@material-ui/core/Paper";
 import LinkComponent from "../link";
 import ClearIcon from '@material-ui/icons/Clear';
-import styles from "./index.module.css";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+import styles from "./index.module.css";
 
 const CartProduct = ({ imageUrl, title, price, requestedQuantity, maxQuantity,
                          productId, userId, handleUpdate, handleClear }) =>{
@@ -54,7 +54,7 @@ const CartProduct = ({ imageUrl, title, price, requestedQuantity, maxQuantity,
     return (
         <Paper className={styles.container}>
             <figure className={styles.item}>
-                <img src={imageUrl} alt={title}/>
+                <img className={styles.image} src={imageUrl} alt={title}/>
             </figure>
             <TextField id="select" label="Qty" value={amount} select onChange={handleAmountChange}>
                 {

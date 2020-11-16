@@ -13,5 +13,6 @@
 }
 
 .image{
+    max-height: 140px;
     margin-bottom: 25px;
 }
