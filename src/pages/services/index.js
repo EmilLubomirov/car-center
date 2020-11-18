@@ -3,7 +3,7 @@ import {useHistory} from "react-router-dom";
 import Heading from "../../components/heading";
 import Input from "../../components/input";
 import PageLayout from "../../components/page-layout";
-import {MenuItem, TextField} from "@material-ui/core";
+import SelectComponent from "../../components/select";
 import ButtonComponent from "../../components/button";
 import Notification from "../../components/notification";
 import AuthContext from "../../AuthContext";
@@ -160,7 +160,7 @@ const ServicesPage = () =>{
                 <div className={styles.wrapper}>
                     <Heading type="h4" value="Do not waste your time! Make an appointment now!"/>
                     <p className={styles.note}>
-                        * NOTE: You should choose a weekday and time between 9 and 19 o'clock from the calendar below!
+                        * NOTE: You should choose a weekday and an hour between 9 and 19 o'clock from the calendar below!
                     </p>
                     <form className={styles.form}>
                         <Input label="First name" type="text" id="firstName" value={firstName}
@@ -173,11 +173,10 @@ const ServicesPage = () =>{
                                onChange={handleCarLicensePlateChange}/>
                         <Input type="datetime-local" id="time" value={date}
                                onChange={handleDateChange}/>
-                        <TextField className={styles.tag} id="select" label="Tag" value={tag} select onChange={handleTagChange}>
-                            {serviceTags.map((t) =>{
-                                return <MenuItem key={t._id} value={t.name}>{t.name}</MenuItem>
-                            })}
-                        </TextField>
+
+                         <div className={styles.tag}>
+                             <SelectComponent values={serviceTags} label="Tag" value={tag} handleChange={handleTagChange}/>
+                         </div>
 
                         <div className={styles.button}>
                             <ButtonComponent onClick={handleClick} value="Confirm"/>

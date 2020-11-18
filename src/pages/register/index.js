@@ -7,8 +7,8 @@ import ButtonComponent from "../../components/button";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import  {MESSAGES, MESSAGE_TYPES} from "../../utils/constants";
-import styles from "./index.module.css";
 import Notification from "../../components/notification";
+import styles from "./index.module.css";
 
 const RegisterPage = () =>{
 

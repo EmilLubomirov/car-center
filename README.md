@@ -20,18 +20,23 @@ make an appointment through the service page
 and to purchase car products from the store as well.
 
 Users are capable of adding products they liked 
-to their shopping cart and making an order from there.
+to their shopping cart and making orders from there.
  
 If you are authorized as an admin, you are able to add 
-products to the store. The images of the products are saved in 
-Cloudinary.
+items to the store.
 
 ##### Setup:
-1. `npm install` - to install all dependencies
-2. `Add .env file in the API provided with 
-    Node environment, 
-    port, DB url and secret phrase`
-3. `Add .env file in the project with your cloudinary data`
-4. `npm start` - to start the server locally
+1. `npm install (both in the API and project)` - to install all dependencies
+2. `Add .env file in the API provided with:`
+    - NODE_ENV
+    - PORT
+    - DATABASE_URL
+    - COOKIE_SECRET
+    - TOKEN_SECRET
+    
+3. `Add .env file in the project with your cloudinary data:`
+    - REACT_APP_CLOUD_NAME
+    - REACT_APP_UPLOAD_PRESET
+4. `npm start (both in the API and project)` - to start the servers locally
 5. `open localhost:3000`   
     

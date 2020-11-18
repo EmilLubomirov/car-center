@@ -1,12 +1,11 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useHistory, useParams} from "react-router-dom"
 import PageLayout from "../../components/page-layout";
-import CartProduct from "../../components/cart-product";
 import Heading from "../../components/heading";
-import {CART} from "../../utils/constants";
 import Grid from "@material-ui/core/Grid";
 import ButtonComponent from "../../components/button";
 import LoadingBar from "../../components/loading-bar";
+import CartProducts from "../../components/cart-products";
 import styles from "./index.module.css";
 
 const CartPage = () =>{
@@ -141,40 +140,16 @@ const CartPage = () =>{
                         <Grid className={styles.items} container>
                             <Grid item xs={12} sm={8}>
                                 {products.length === 0 ? (
-                                    <div className={styles["empty-cart"]}>
-                                        <Heading type="h3" value="The cart is empty"/>
-                                        <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
-                                    </div>) :
-                                    products.map(p =>{
-                                        const {
-                                            _id,
-                                            title,
-                                            price,
-                                            quantity,
-                                            imageUrl
-                                        } = p.product;
-
-                                        const MAX_PRODUCT_QUANTITY = CART.MAX_PRODUCT_QUANTITY;
-
-                                        const maxQuantity = MAX_PRODUCT_QUANTITY > quantity ?
-                                            quantity : MAX_PRODUCT_QUANTITY;
-
-                                        const requestedQuantity = p.quantity >  maxQuantity ?
-                                            maxQuantity  : p.quantity;
-
-                                        return (
-                                            <CartProduct key={_id}
-                                                         imageUrl={imageUrl}
-                                                         title={title}
-                                                         price={price}
-                                                         requestedQuantity={requestedQuantity}
-                                                         maxQuantity={maxQuantity}
-                                                         productId={_id}
-                                                         userId={params.userId}
-                                                         handleUpdate={getProducts}
-                                                         handleClear={() => handleClear(_id)}/>
-                                        );
-                                    })}
+                                        <div className={styles["empty-cart"]}>
+                                            <Heading type="h3" value="The cart is empty"/>
+                                            <ButtonComponent onClick={handleShoppingClick} value="Continue Shopping"/>
+                                        </div>) :
+                                    (
+                                        <CartProducts products={products}
+                                                   userId={params.userId}
+                                                   handleUpdate={getProducts}
+                                                   handleClear={handleClear}/>)
+                                }
                             </Grid>
                             <Grid>
                                 <div>

@@ -2,16 +2,15 @@ import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useLocation, useHistory} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
-import ProductCard from "../../components/product-card";
-import Grid from "@material-ui/core/Grid";
 import Notification from "../../components/notification";
 import PaginationComponent from "../../components/pagination";
 import {PRODUCT} from "../../utils/constants";
-import styles from "./index.module.css";
 import {getProductTags} from "../../utils/product-tag";
 import FormGroup from "@material-ui/core/FormGroup";
 import CheckboxComponent from "../../components/checkbox";
 import LoadingBar from "../../components/loading-bar";
+import ProductCards from "../../components/product-cards";
+import styles from "./index.module.css";
 
 const StorePage = () =>{
 
@@ -180,28 +179,9 @@ const StorePage = () =>{
                             </div>
 
                             <div className={styles.products}>
-                                <Grid   container
-                                        direction="row"
-                                        alignItems="center"
-                                        spacing={4}>
-                                    {
-                                        products.map(product => {
-                                        return (<Grid key={product._id} item xs={6} sm={3}>
-                                            <ProductCard imageUrl={product.imageUrl}
-                                                         title={product.title}
-                                                         price={product.price}
-                                                         id={product._id}
-                                                         handleError={handleError}/>
-                                        </Grid>)
-                                    })
-                                    }
-
-                                    {
-                                        productsEmpty ? (
-                                            <Heading type="h4" value="No products were found"/>
-                                        ) : null
-                                    }
-                                </Grid>
+                                <ProductCards products={products}
+                                              productsEmpty={productsEmpty}
+                                              handleError={handleError}/>
                             </div>
                         </div>
 

@@ -4,15 +4,15 @@ import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
 import Input from "../../components/input";
 import ButtonComponent from "../../components/button";
-import {TextField, MenuItem} from "@material-ui/core";
 import {openUploadWidget} from "../../utils/cloudinaryService";
 import {CloudinaryContext} from "cloudinary-react"
 import Notification from "../../components/notification";
 import {getProductTags} from "../../utils/product-tag";
 import Paper from "@material-ui/core/Paper";
 import  {MESSAGES, MESSAGE_TYPES} from "../../utils/constants";
-import styles from "./index.module.css";
+import SelectComponent from "../../components/select";
 import AuthContext from "../../AuthContext";
+import styles from "./index.module.css";
 
 const AddProductPage = () =>{
 
@@ -142,11 +142,9 @@ const AddProductPage = () =>{
 
                         <ButtonComponent color="default" value="Upload" onClick={() => beginUpload(tag)}/>
 
-                        <TextField className={styles.tag} id="select" label="Tag" value={tag} select onChange={handleTagChange}>
-                            {tags.map((t) =>{
-                                return <MenuItem key={t._id} value={t.name}>{t.name}</MenuItem>
-                            })}
-                        </TextField>
+                        <div className={styles.tag}>
+                            <SelectComponent values={tags} value={tag} label="Tag" handleChange={handleTagChange}/>
+                        </div>
 
                         <div className={styles.button}>
                             <ButtonComponent value="Save"

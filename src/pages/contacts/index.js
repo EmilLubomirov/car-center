@@ -3,8 +3,8 @@ import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
 import MapComponent from "../../components/map";
 import Paper from "@material-ui/core/Paper";
-import styles from "./index.module.css"
 import LoadingBar from "../../components/loading-bar";
+import styles from "./index.module.css";
 
 const ContactsPage = () =>{
 
