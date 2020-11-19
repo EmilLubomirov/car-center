@@ -100,6 +100,8 @@ const AddProductPage = () =>{
 
     const beginUpload = tag => {
 
+        console.log(process.env);
+
         const uploadOptions = {
             cloudName: process.env.REACT_APP_CLOUD_NAME,
             tags: [tag],

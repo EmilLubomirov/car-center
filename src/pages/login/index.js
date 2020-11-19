@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useHistory, useLocation} from  "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
@@ -9,6 +9,7 @@ import {authenticate} from "../../utils/auth";
 import {MESSAGE_TYPES, MESSAGES} from "../../utils/constants";
 import Notification from "../../components/notification";
 import Paper from "@material-ui/core/Paper";
+import FacebookLogin from 'react-facebook-login';
 import styles from "./index.module.css";
 
 const LoginPage = () =>{
@@ -17,6 +18,12 @@ const LoginPage = () =>{
     const [password, setPassword] = useState("");
     const [isUsernameEmpty, setUsernameEmpty] = useState(false);
     const [isPasswordEmpty, setPasswordEmpty] = useState(false);
+
+    const [fbContent, setFbContent] = useState({
+        isLoggedIn: false,
+        email: '',
+        accessToken: ''
+    });
 
     const location = useLocation();
     const { state } = location;
@@ -57,24 +64,33 @@ const LoginPage = () =>{
 
     const handleSubmit = (e) =>{
 
-        e.preventDefault();
+        if (e) { e.preventDefault(); }
 
-        const isUsernameEmpty = username.trim() === '';
-        const isPasswordEmpty = password.trim() === '';
+        const { email, accessToken } = fbContent;
+        const isFacebookLogin = email && accessToken;
 
-        setUsernameEmpty(isUsernameEmpty);
-        setPasswordEmpty(isPasswordEmpty);
+        if (!isFacebookLogin){
+            const isUsernameEmpty = username.trim() === '';
+            const isPasswordEmpty = password.trim() === '';
 
-        if (isUsernameEmpty || isPasswordEmpty){
-            return;
+            setUsernameEmpty(isUsernameEmpty);
+            setPasswordEmpty(isPasswordEmpty);
+
+            if (isUsernameEmpty || isPasswordEmpty){
+                return;
+            }
         }
 
         const url = "http://localhost:9999/api/user/login";
         const headers =  { 'Content-Type': 'application/json' };
 
-        const body = JSON.stringify({
+        const body = !isFacebookLogin ? JSON.stringify({
             username,
             password
+        }) : JSON.stringify({
+            isFacebook: true,
+            username: email,
+            password: accessToken
         });
 
         authenticate(url, headers, body, async (response) =>{
@@ -97,10 +113,42 @@ const LoginPage = () =>{
             setMessage({
                 isOpen: true,
                 value: MESSAGES.userNotFound,
-                type: "error"
+                type: MESSAGE_TYPES.error
             });
         })
     };
+
+    const responseFacebook = async (response) => {
+
+        const { email, accessToken } = response;
+
+        try {
+           await fetch("http://localhost:9999/api/user/register", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: email,
+                    password: accessToken
+                })
+            });
+        }
+
+        finally {
+            setFbContent({
+                isLoggedIn: true,
+                email,
+                accessToken
+            });
+        }
+    };
+
+    useEffect(() => {
+        if (fbContent.isLoggedIn){
+            handleSubmit();
+        }
+    }, [fbContent.isLoggedIn, handleSubmit]);
 
     return (
         <PageLayout>
@@ -131,6 +179,20 @@ const LoginPage = () =>{
                                       duration={5000}
                                       onClose={handleMessageClose}/>
                     </form>
+
+                   {
+
+                       !fbContent.isLoggedIn ?
+                           (
+                               <div className={styles.fb}>
+                                   <FacebookLogin
+                                       appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+                                       autoLoad={false}
+                                       fields="name,email"
+                                       callback={responseFacebook} />
+                               </div>
+                       ) : null
+                   }
                 </div>
             </Paper>
         </PageLayout>
