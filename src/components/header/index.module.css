@@ -2,11 +2,20 @@
     height: 100px;
 }
 
+.user-container{
+    display: flex;
+    justify-content: space-between;
+}
+
 .wrapper{
     width: 80%;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+}
+
+.user-wrapper{
+    width: 65%;
 }
 
 .wrapper a {

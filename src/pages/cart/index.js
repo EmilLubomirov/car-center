@@ -159,7 +159,7 @@ const CartPage = () =>{
                                                 <div>
                                                     <strong>Products price: {productsPrice}</strong>
                                                 </div>
-                                                <div>
+                                                <div className={styles["total-price"]}>
                                                     <strong>
                                                         Total price: {totalPrice}
                                                         <small>&#160;(*delivery included)</small>

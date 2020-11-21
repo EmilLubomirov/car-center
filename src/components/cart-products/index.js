@@ -36,7 +36,7 @@ const CartProducts = ({products, userId, handleUpdate, handleClear}) => {
                                      handleUpdate={handleUpdate}
                                      handleClear={() => handleClear(_id)}/>
                     );
-                })}
+                })
             }
         </div>
     )

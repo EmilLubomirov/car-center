@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {useHistory, useLocation} from  "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
@@ -62,7 +62,7 @@ const LoginPage = () =>{
         })
     };
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = useCallback((e) =>{
 
         if (e) { e.preventDefault(); }
 
@@ -116,7 +116,7 @@ const LoginPage = () =>{
                 type: MESSAGE_TYPES.error
             });
         })
-    };
+    }, [context, fbContent, history, password, username]);
 
     const responseFacebook = async (response) => {
 
@@ -170,8 +170,24 @@ const LoginPage = () =>{
                                helperText={isPasswordEmpty ? "Password should not be empty" : ""}
                                error={isPasswordEmpty}/>
 
-                        <ButtonComponent value="Login"
-                                         onClick={handleSubmit}/>
+                               <div className={styles.btn}>
+                                   <ButtonComponent  value="Login"
+                                                     onClick={handleSubmit}/>
+                               </div>
+
+                        {
+
+                            !fbContent.isLoggedIn ?
+                                (
+                                    <div className={styles.btn}>
+                                        <FacebookLogin
+                                            appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+                                            autoLoad={false}
+                                            fields="name,email"
+                                            callback={responseFacebook} />
+                                    </div>
+                                ) : null
+                        }
 
                         <Notification type={message.type}
                                       message={message.value}
@@ -179,20 +195,6 @@ const LoginPage = () =>{
                                       duration={5000}
                                       onClose={handleMessageClose}/>
                     </form>
-
-                   {
-
-                       !fbContent.isLoggedIn ?
-                           (
-                               <div className={styles.fb}>
-                                   <FacebookLogin
-                                       appId={process.env.REACT_APP_FACEBOOK_APP_ID}
-                                       autoLoad={false}
-                                       fields="name,email"
-                                       callback={responseFacebook} />
-                               </div>
-                       ) : null
-                   }
                 </div>
             </Paper>
         </PageLayout>

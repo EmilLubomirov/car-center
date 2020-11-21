@@ -9,18 +9,19 @@
 .wrapper{
     display: flex;
     flex-flow: column;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     align-items: center;
-    margin: 85px auto;
-    height: 250px;
+    margin: 50px auto;
+    height: 350px;
 }
 
 .form {
     display: flex;
     flex-flow: column wrap;
     align-items: center;
+    margin-top: 20px;
 }
 
-.fb{
+.btn{
     margin-top: 15px;
 }

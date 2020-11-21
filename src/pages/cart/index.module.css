@@ -8,16 +8,17 @@
 }
 
 .price-section{
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
     margin: 40px 20px 10px 20px;
-    height: 110px;
     font-size: 20px;
 }
 
+.total-price{
+    margin-top: 6px;
+}
+
 .order-button{
-    align-self: center;
+    margin: 20px auto 10px auto;
+    max-width: fit-content;
 }
 
 .shopping-button{

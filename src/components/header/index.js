@@ -32,9 +32,9 @@ const Header = () =>{
     return (
         <AppBar position="static">
             <Container>
-                <Toolbar>
+                <Toolbar className={`${context.user ? styles["user-container"] : ''}`}>
                     <img className={styles.logo} src="/car-logo.png" alt="logo"/>
-                    <div className={styles.wrapper}>
+                    <div className={`${styles.wrapper} ${context.user ? styles["user-wrapper"] : ''}`}>
                         {
                             navigation.map((navItem, index) => {
 
