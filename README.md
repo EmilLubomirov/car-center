@@ -37,7 +37,7 @@ goods to the store.
     - cookie_secret
     - token_secret
     
-3. `Add .env file in the project with your cloudinary data:`
+3. `Add .env file in the project with the following data:`
     - react_app_cloud_name
     - react_app_upload_preset
     - react_app_facebook_app_id
