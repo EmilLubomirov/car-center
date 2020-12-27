@@ -37,9 +37,13 @@ const ProductCard = ({imageUrl, title, price, id, handleError}) =>{
                             image={imageUrl}
                             title={title}
                         />
-                        <CardContent>
+                        <CardContent className={styles.content}>
                             <Heading type="h5" value={title}/>
-                            <Heading type="h6" value={`Price: ${price} lv.`}/>
+                            <div className={styles.price}>
+                                <Heading fontWeight="600"
+                                         type="h6"
+                                         value={`Price: ${price} lv.`}/>
+                            </div>
                         </CardContent>
                     </CardActionArea>
                  </LinkComponent>

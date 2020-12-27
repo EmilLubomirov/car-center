@@ -8,8 +8,19 @@
     min-height: 70vh;
 }
 
+.title{
+    padding: 20px 30px;
+    text-align: center;
+}
+
 .description{
-    max-width: 35%;
+    max-width: 45%;
+}
+
+.price{
+    color: #D80000;
+    font-weight: 600;
+    font-size: 20px;
 }
 
 .image{
