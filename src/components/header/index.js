@@ -21,6 +21,7 @@ const Header = () =>{
         context.logout();
 
         sessionStorage.removeItem("tags");
+        sessionStorage.removeItem("recentPage");
         document.cookie = "x-auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
         history.push('/login', {

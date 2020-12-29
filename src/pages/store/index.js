@@ -106,6 +106,8 @@ const StorePage = () =>{
             const filtered = selectedTags.filter(tag => tag !== value);
             setSelectedTags(filtered);
         }
+
+        history.push('/?page=1')
     };
 
     useEffect(() => {
@@ -133,13 +135,20 @@ const StorePage = () =>{
     }, []);
 
     useEffect(() =>{
-        const selectedPage = parseInt(location.search.split('=')[1]) || 1;
 
+        let selectedPage = location.search.split('=')[1] ||
+                           sessionStorage.getItem("recentPage") || "1";
+
+        if (selectedPage > pageCount) {
+            return;
+        }
+
+        sessionStorage.setItem("recentPage", selectedPage);
         let skip = (selectedPage - 1) * PRODUCT.MAX_PRODUCTS_BY_PAGE;
         let limit = PRODUCT.MAX_PRODUCTS_BY_PAGE;
 
         getProducts(skip, limit, selectedTags);
-    }, [getProducts, location.search, selectedTags]);
+    }, [getProducts, location.search, selectedTags, pageCount]);
 
     useEffect(() => {
         if (!isLoading){
@@ -193,7 +202,10 @@ const StorePage = () =>{
                                       onClose={handleMessageClose}/>
 
                         <div className={styles.pagination}>
-                            <PaginationComponent pageCount={pageCount} pageUrl="/" size="large"/>
+                            <PaginationComponent currentPage={sessionStorage.getItem("recentPage")}
+                                                 pageCount={pageCount}
+                                                 pageUrl="/"
+                                                 size="large"/>
                         </div>
                     </div>
                 )
