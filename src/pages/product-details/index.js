@@ -78,7 +78,7 @@ const ProductDetailsPage = () =>{
                                 <Heading type="h4" value={title}/>
                             </div>
                             <p className={styles.description}>{description}</p>
-                            <p className={styles.price}>Price: {price} lv.</p>
+                            <p className={styles.price}>Price: {price.toFixed(2)} lv.</p>
                             <ButtonComponent onClick={handleClick} value="Add to cart">
                                 <AddShoppingCartIcon/>
                             </ButtonComponent>

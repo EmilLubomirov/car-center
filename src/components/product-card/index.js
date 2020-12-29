@@ -42,12 +42,12 @@ const ProductCard = ({imageUrl, title, price, id, handleError}) =>{
                             <div className={styles.price}>
                                 <Heading fontWeight="600"
                                          type="h6"
-                                         value={`Price: ${price} lv.`}/>
+                                         value={`Price: ${price.toFixed(2)} lv.`}/>
                             </div>
                         </CardContent>
                     </CardActionArea>
                  </LinkComponent>
-                <CardActions>
+                <CardActions className={styles.centered}>
                     <ButtonComponent onClick={handleClick} color="primary" value="Add to cart">
                         <AddShoppingCartIcon/>
                     </ButtonComponent>

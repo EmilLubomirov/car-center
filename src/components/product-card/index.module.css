@@ -6,6 +6,11 @@
     color: #D80000
 }
 
+.centered{
+    display: flex;
+    justify-content: center;
+}
+
 .img{
     max-height: 140px;
 }
