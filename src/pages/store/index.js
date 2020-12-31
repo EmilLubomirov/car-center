@@ -11,6 +11,7 @@ import CheckboxComponent from "../../components/checkbox";
 import LoadingBar from "../../components/loading-bar";
 import ProductCards from "../../components/product-cards";
 import styles from "./index.module.css";
+import {isElement} from "react-dom/test-utils";
 
 const StorePage = () =>{
 
@@ -139,6 +140,10 @@ const StorePage = () =>{
         let selectedPage = location.search.split('=')[1] ||
                            sessionStorage.getItem("recentPage") || "1";
 
+        if (selectedPage !== sessionStorage.getItem('recentPage')){
+            document.documentElement.scrollTop = 0;
+        }
+
         if (selectedPage > pageCount) {
             return;
         }
@@ -180,9 +185,11 @@ const StorePage = () =>{
                             <div className={styles.selection}>
                                 <FormGroup>
                                     {tags.map(t => {
-                                        return <CheckboxComponent key={t._id} value={t.name} color="primary"
-                                                                  isChecked={selectedTags.includes(t.name)}
-                                                                  handleChange={handleChange}/>
+                                        return (<div className={styles.tag}>
+                                            <CheckboxComponent key={t._id} value={t.name} color="primary"
+                                                               isChecked={selectedTags.includes(t.name)}
+                                                               handleChange={handleChange}/>
+                                        </div>)
                                     })}
                                 </FormGroup>
                             </div>

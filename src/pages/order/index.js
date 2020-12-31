@@ -151,8 +151,12 @@ const OrderPage = () =>{
                                onChange={handleAddressChange}/>
                         <p className={styles.price}>Total price: {totalPrice} lv.</p>
 
-                        <ButtonComponent size="large" value="Finish"
-                                         onClick={handleSubmit}/>
+                        <div className={styles.btn}>
+                            <ButtonComponent isFullWidth={true}
+                                             size="large"
+                                             value="Finish"
+                                             onClick={handleSubmit}/>
+                        </div>
                     </form>
 
                     <Notification type={message.type}

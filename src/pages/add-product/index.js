@@ -150,6 +150,7 @@ const AddProductPage = () =>{
 
                         <div className={styles.button}>
                             <ButtonComponent value="Save"
+                                             size="large"
                                              onClick={handleSubmit}/>
                         </div>
                     </form>

@@ -179,7 +179,9 @@ const ServicesPage = () =>{
                          </div>
 
                         <div className={styles.button}>
-                            <ButtonComponent onClick={handleClick} value="Confirm"/>
+                            <ButtonComponent size="large"
+                                             onClick={handleClick}
+                                             value="Confirm"/>
                         </div>
 
                     </form>

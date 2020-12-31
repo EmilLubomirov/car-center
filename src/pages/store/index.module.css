@@ -24,7 +24,11 @@
 }
 
 .selection{
-    flex: 0 1 20%;
+    flex: 0 1 17%;
+}
+
+.tag{
+    border-bottom: 1px solid lightgray;
 }
 
 .products{
